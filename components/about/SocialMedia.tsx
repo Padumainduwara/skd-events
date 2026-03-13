@@ -70,7 +70,8 @@ export default function SocialMedia() {
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-50 border border-gray-100 mb-4 shadow-sm"
+            /* PERFORMANCE FIX: GPU Acceleration */
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gray-50 border border-gray-100 mb-4 shadow-sm transform-gpu will-change-[transform,opacity]"
           >
             <Share2 className="w-3.5 h-3.5 text-[#a40049]" />
             <span className="text-[10px] font-bold tracking-widest text-gray-600 uppercase">
@@ -82,7 +83,8 @@ export default function SocialMedia() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight"
+            /* PERFORMANCE FIX: GPU Acceleration */
+            className="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight transform-gpu will-change-[transform,opacity]"
           >
             Join Our <span className="text-[#a40049]">Community</span>
           </motion.h2>
@@ -97,7 +99,8 @@ export default function SocialMedia() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.05 }}
                 /* FIXED SIZE: w-40 (160px) ensures all boxes look identical on mobile and desktop */
-                className="relative w-40 sm:w-44 h-12 sm:h-16 flex items-center justify-center rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden"
+                /* PERFORMANCE FIX: Added transform-gpu and will-change to the animating card */
+                className="relative w-40 sm:w-44 h-12 sm:h-16 flex items-center justify-center rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:-translate-y-1 transition-all duration-300 overflow-hidden transform-gpu will-change-[transform,opacity]"
               >
                 {/* Hover Gradient Glow */}
                 <div className={`absolute inset-0 bg-gradient-to-r ${social.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
@@ -107,7 +110,7 @@ export default function SocialMedia() {
 
                 {/* Content */}
                 <div className="relative z-10 flex items-center gap-3">
-                  <div className="text-gray-400 group-hover:text-[#a40049] transition-colors duration-300">
+                  <div className="text-gray-400 group-hover:text-[#a40049] transition-colors duration-300 transform-gpu">
                     {social.icon}
                   </div>
                   
@@ -117,7 +120,8 @@ export default function SocialMedia() {
                     </span>
                   </div>
 
-                  <ArrowUpRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-[#a40049] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                  {/* PERFORMANCE FIX: Added transform-gpu to arrow animation */}
+                  <ArrowUpRight className="w-3.5 h-3.5 text-gray-300 group-hover:text-[#a40049] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all transform-gpu" />
                 </div>
               </motion.div>
             </Link>

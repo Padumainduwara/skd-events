@@ -12,7 +12,7 @@ export default function ContactFormInfo() {
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Topics updated from PDF Context (Added Refund/Cancellation) [cite: 31, 33, 336]
+  // Topics updated from PDF Context (Added Refund/Cancellation)
   const topics = [
     "Convocation Event",
     "Corporate Event / Launch",
@@ -64,7 +64,8 @@ export default function ContactFormInfo() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="flex flex-col items-center text-center lg:items-start lg:text-left"
+              /* PERFORMANCE FIX: GPU Acceleration */
+              className="flex flex-col items-center text-center lg:items-start lg:text-left transform-gpu will-change-[transform,opacity]"
             >
               <h2 className="text-3xl font-bold text-gray-900 mb-3">Contact Details</h2>
               <p className="text-gray-500 font-medium mb-4 lg:mb-8 leading-relaxed max-w-sm">
@@ -72,12 +73,13 @@ export default function ContactFormInfo() {
               </p>
             </motion.div>
 
-            {/* Address Card [cite: 156] */}
+            {/* Address Card */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
-              className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300"
+              /* PERFORMANCE FIX: GPU Acceleration */
+              className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300 transform-gpu will-change-[transform,opacity]"
             >
-              <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors transform-gpu">
                 <MapPin className="w-5 h-5 text-[#a40049]" />
               </div>
               <div>
@@ -86,12 +88,13 @@ export default function ContactFormInfo() {
               </div>
             </motion.div>
 
-            {/* Contact Card [cite: 241] */}
+            {/* Contact Card */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}
-              className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300"
+              /* PERFORMANCE FIX: GPU Acceleration */
+              className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300 transform-gpu will-change-[transform,opacity]"
             >
-              <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors transform-gpu">
                 <PhoneCall className="w-5 h-5 text-[#a40049]" />
               </div>
               <div>
@@ -100,12 +103,13 @@ export default function ContactFormInfo() {
               </div>
             </motion.div>
 
-            {/* Email Card (Updated with PDF Refund Info) [cite: 376, 377] */}
+            {/* Email Card (Updated with PDF Refund Info) */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}
-              className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300"
+              /* PERFORMANCE FIX: GPU Acceleration */
+              className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300 transform-gpu will-change-[transform,opacity]"
             >
-              <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors">
+              <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors transform-gpu">
                 <Mail className="w-5 h-5 text-[#a40049]" />
               </div>
               <div>
@@ -116,10 +120,11 @@ export default function ContactFormInfo() {
               </div>
             </motion.div>
 
-            {/* PDF Extracted Guideline [cite: 151] */}
+            {/* PDF Extracted Guideline */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }}
-              className="p-6 rounded-3xl bg-gradient-to-br from-[#a40049]/5 to-transparent border border-[#a40049]/20 flex gap-5 relative overflow-hidden"
+              /* PERFORMANCE FIX: GPU Acceleration */
+              className="p-6 rounded-3xl bg-gradient-to-br from-[#a40049]/5 to-transparent border border-[#a40049]/20 flex gap-5 relative overflow-hidden transform-gpu will-change-[transform,opacity]"
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-[#a40049]" />
               <div className="w-10 h-10 rounded-full bg-[#a40049]/10 flex items-center justify-center flex-shrink-0">
@@ -143,14 +148,15 @@ export default function ContactFormInfo() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="lg:col-span-3 bg-white border border-gray-200 shadow-2xl shadow-gray-200/50 rounded-[2.5rem] p-6 sm:p-8 md:p-12 relative overflow-hidden"
+            /* PERFORMANCE FIX: Added GPU Acceleration to the heavy shadow container */
+            className="lg:col-span-3 bg-white border border-gray-200 shadow-2xl shadow-gray-200/50 rounded-[2.5rem] p-6 sm:p-8 md:p-12 relative overflow-hidden transform-gpu will-change-[transform,opacity]"
           >
             {/* Form Top Decor */}
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#a40049] to-[#ff4d94]" />
 
             <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8">Send Us A Message</h3>
 
-            {/* Form fields based on PDF requirements [cite: 135-147] */}
+            {/* Form fields based on PDF requirements */}
             <form className="space-y-6" onSubmit={handleSubmit}>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -179,7 +185,7 @@ export default function ContactFormInfo() {
                     <span className={selectedTopic ? "text-gray-900" : "text-gray-400"}>
                       {selectedTopic || "Select an event type"}
                     </span>
-                    <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 transform-gpu ${isDropdownOpen ? 'rotate-180' : ''}`} />
                   </div>
 
                   {/* Dropdown Options List */}
@@ -187,7 +193,8 @@ export default function ContactFormInfo() {
                     <motion.div 
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="absolute z-20 w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden"
+                      /* PERFORMANCE FIX: Added GPU Acceleration to the dropdown */
+                      className="absolute z-20 w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden transform-gpu will-change-[transform,opacity]"
                     >
                       {topics.map((topic) => (
                         <div 
@@ -217,7 +224,7 @@ export default function ContactFormInfo() {
                 <textarea rows={5} required placeholder="Tell us more about your event date, location, and specific needs..." className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all resize-none"></textarea>
               </div>
 
-              {/* Privacy Policy Checkbox (Controls Button state) [cite: 192] */}
+              {/* Privacy Policy Checkbox (Controls Button state) */}
               <div className="flex items-start gap-3 mt-4">
                 <div className="flex items-center h-5 mt-1">
                   <input 
@@ -242,7 +249,7 @@ export default function ContactFormInfo() {
               <button 
                 type="submit" 
                 disabled={!isPrivacyAccepted}
-                className={`w-full group relative px-8 py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-500
+                className={`w-full group relative px-8 py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-500 transform-gpu
                   ${isPrivacyAccepted 
                     ? "bg-gray-900 text-white shadow-lg hover:shadow-xl hover:bg-gradient-to-r hover:from-[#a40049] hover:to-[#4d002c] cursor-pointer" 
                     : "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -250,7 +257,7 @@ export default function ContactFormInfo() {
                 `}
               >
                 Send Inquiry
-                <Send className={`w-5 h-5 transition-transform duration-300 ${isPrivacyAccepted ? "group-hover:translate-x-1 group-hover:-translate-y-1" : ""}`} />
+                <Send className={`w-5 h-5 transition-transform duration-300 transform-gpu ${isPrivacyAccepted ? "group-hover:translate-x-1 group-hover:-translate-y-1" : ""}`} />
               </button>
 
             </form>

@@ -9,7 +9,7 @@ export default function AboutHero() {
   };
 
   return (
-    <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+    <section className="relative overflow-hidden bg-white pt-36 md:pt-42 pb-24 md:pb-32">
       
       {/* PERFORMANCE FIX: Added transform-gpu and will-change-transform to offload heavy blur to the GPU */}
       <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-[#a40049]/5 to-transparent rounded-full blur-[100px] pointer-events-none transform-gpu will-change-transform" />
@@ -47,7 +47,7 @@ export default function AboutHero() {
               onClick={handleScroll}
               whileHover={{ y: -3 }}
               whileTap={{ scale: 0.95 }}
-              className="mt-4 group relative px-8 py-4 bg-gray-900 rounded-full font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3"
+              className="mt-4 group relative px-8 py-4 bg-gray-900 rounded-full font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 transform-gpu"
             >
               Explore Our Story
               <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform duration-300 text-[#ff4d94]" />
@@ -67,7 +67,7 @@ export default function AboutHero() {
                 
                 {/* PERFORMANCE FIX: Added decoding="async" loading="eager" to Images & will-change-transform to motion.div */}
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="relative flex-[3] rounded-3xl overflow-hidden shadow-xl group cursor-pointer bg-gray-200 transform-gpu will-change-transform">
-                  <img src="/services/stage.jpg" alt="Stage" decoding="async" loading="eager" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-110" />
+                  <img src="/services/stage.jpg" alt="Stage" decoding="async" loading="eager" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-110 transform-gpu" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
                 </motion.div>
                 
@@ -80,7 +80,7 @@ export default function AboutHero() {
                 >
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#a40049] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#a40049]/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#a40049]/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-500 transform-gpu">
                     <ShieldCheck className="w-6 h-6 sm:w-8 sm:h-8 text-[#a40049]" />
                   </div>
                   <h3 className="font-extrabold text-gray-900 text-lg sm:text-xl mb-1">ISO Certified</h3>
@@ -94,12 +94,12 @@ export default function AboutHero() {
               {/* Column 2 */}
               <div className="flex flex-col gap-4 sm:gap-6 pb-12 sm:pb-20">
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.5 }} className="relative flex-[2] rounded-3xl overflow-hidden shadow-xl group cursor-pointer bg-gray-200 transform-gpu will-change-transform">
-                  <img src="/about/convocation.jpg" alt="Backdrop" decoding="async" loading="eager" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-110" />
+                  <img src="/about/convocation.jpg" alt="Backdrop" decoding="async" loading="eager" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-110 transform-gpu" />
                   <div className="absolute inset-0 bg-[#a40049]/20 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500" />
                 </motion.div>
                 
                 <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.6 }} className="relative flex-[3] rounded-3xl overflow-hidden shadow-xl group cursor-pointer bg-gray-200 transform-gpu will-change-transform">
-                  <img src="/services/lighting.jpg" alt="Lighting" decoding="async" loading="eager" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-110" />
+                  <img src="/services/lighting.jpg" alt="Lighting" decoding="async" loading="eager" className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1000ms] group-hover:scale-110 transform-gpu" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-50 group-hover:opacity-80 transition-opacity duration-500" />
                 </motion.div>
               </div>

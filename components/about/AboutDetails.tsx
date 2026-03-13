@@ -14,11 +14,13 @@ export default function AboutDetails() {
               ========================================= */}
           <div className="w-full lg:w-1/3 relative">
             <div className="lg:sticky lg:top-32">
+              {/* PERFORMANCE FIX: Added GPU Acceleration to the sticky header animation */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6 }}
+                className="transform-gpu will-change-[transform,opacity]"
               >
                 <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight">
                   Who We Are & <br className="hidden lg:block"/>
@@ -43,6 +45,8 @@ export default function AboutDetails() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
+              /* PERFORMANCE FIX: GPU Acceleration to prevent scroll jitter */
+              className="transform-gpu will-change-[transform,opacity]"
             >
               <h3 className="text-2xl font-bold text-[#a40049] mb-6">Our Foundation</h3>
               <div className="space-y-6 text-lg text-gray-700 leading-relaxed font-medium">
@@ -64,6 +68,7 @@ export default function AboutDetails() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
+              className="transform-gpu will-change-[transform,opacity]"
             >
               <h3 className="text-2xl font-bold text-[#a40049] mb-6">The Team Behind the Magic</h3>
               <p className="text-lg text-gray-700 leading-relaxed mb-6 font-medium">
@@ -80,6 +85,7 @@ export default function AboutDetails() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
+              className="transform-gpu will-change-[transform,opacity]"
             >
               <h3 className="text-2xl font-bold text-[#a40049] mb-6">End-to-End Solutions</h3>
               <p className="text-lg text-gray-600 leading-relaxed mb-8">
@@ -114,6 +120,7 @@ export default function AboutDetails() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.6 }}
+              className="transform-gpu will-change-[transform,opacity]"
             >
               <h3 className="text-2xl font-bold text-[#a40049] mb-6">Our Approach</h3>
               <p className="text-lg text-gray-700 leading-relaxed mb-8 font-medium">

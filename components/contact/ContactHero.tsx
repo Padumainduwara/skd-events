@@ -13,11 +13,12 @@ export default function ContactHero() {
       
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
         
+        {/* PERFORMANCE FIX: Added GPU acceleration to all text animations */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-200 mb-6 shadow-sm"
+          className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-200 mb-6 shadow-sm transform-gpu will-change-[transform,opacity]"
         >
           <MessageSquare className="w-4 h-4 text-[#a40049]" />
           <span className="text-[10px] sm:text-xs font-bold tracking-widest text-gray-800 uppercase">
@@ -29,7 +30,7 @@ export default function ContactHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter leading-[1.1] mb-6"
+          className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-gray-900 tracking-tighter leading-[1.1] mb-6 transform-gpu will-change-[transform,opacity]"
         >
           Let's Plan Your Next <br className="hidden sm:block" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a40049] to-[#ff4d94]">Big Event.</span>
@@ -39,7 +40,7 @@ export default function ContactHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="text-lg sm:text-xl text-gray-600 font-medium leading-relaxed max-w-2xl mx-auto"
+          className="text-lg sm:text-xl text-gray-600 font-medium leading-relaxed max-w-2xl mx-auto transform-gpu will-change-[transform,opacity]"
         >
           Have a vision? We have the expertise. Reach out to our team, and let's start crafting an unforgettable experience today.
         </motion.p>
@@ -51,22 +52,22 @@ export default function ContactHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 mt-10"
+          className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 mt-10 transform-gpu will-change-[transform,opacity]"
         >
-          {/* Badge 1: Fast Response */}
-          <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default">
+          {/* Badge 1: Fast Response - Added transform-gpu for the hover effect */}
+          <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default transform-gpu">
             <Zap className="w-4 h-4 sm:w-5 sm:h-5 text-[#a40049]" />
             <span className="text-xs sm:text-sm font-bold text-gray-800">Fast Response</span>
           </div>
 
           {/* Badge 2: 24-Hour Replies */}
-          <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default">
+          <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default transform-gpu">
             <Clock className="w-4 h-4 sm:w-5 sm:h-5 text-[#ff4d94]" />
             <span className="text-xs sm:text-sm font-bold text-gray-800">24-Hour Replies</span>
           </div>
 
           {/* Badge 3: Transparent Process (Extracted from PDF) */}
-          <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default">
+          <div className="flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-gray-200 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 cursor-default transform-gpu">
             <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-[#a40049]" />
             <span className="text-xs sm:text-sm font-bold text-gray-800">Transparent Process</span>
           </div>

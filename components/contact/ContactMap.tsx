@@ -14,7 +14,8 @@ export default function ContactMap() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="flex items-center gap-3 mb-8"
+          /* PERFORMANCE FIX: Added GPU Acceleration for the header animation */
+          className="flex items-center gap-3 mb-8 transform-gpu will-change-[transform,opacity]"
         >
           <div className="w-10 h-10 rounded-full bg-[#a40049]/10 flex items-center justify-center">
             <Map className="w-5 h-5 text-[#a40049]" />
@@ -28,7 +29,8 @@ export default function ContactMap() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/50 border border-gray-200 relative group"
+          /* PERFORMANCE FIX: GPU Acceleration to prevent massive iframe scroll lag */
+          className="w-full h-[400px] md:h-[500px] rounded-[2rem] overflow-hidden shadow-xl shadow-gray-200/50 border border-gray-200 relative group transform-gpu will-change-[transform,opacity]"
         >
           {/* Map loading overlay (optional aesthetic) */}
           <div className="absolute inset-0 bg-gray-100 animate-pulse -z-10" />
@@ -42,7 +44,8 @@ export default function ContactMap() {
             allowFullScreen={false} 
             loading="lazy" 
             referrerPolicy="no-referrer-when-downgrade"
-            className="w-full h-full relative z-10 filter group-hover:contrast-100 transition-all duration-700"
+            /* PERFORMANCE FIX: Added transform-gpu to the iframe itself */
+            className="w-full h-full relative z-10 filter group-hover:contrast-100 transition-all duration-700 transform-gpu"
           ></iframe>
         </motion.div>
 
