@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Sparkles, ChevronDown } from "lucide-react";
 
@@ -22,19 +22,39 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden group"> 
-      <AnimatePresence mode="popLayout">
-        <motion.img
-          key={currentImageIndex}
-          src={backgroundImages[currentImageIndex]}
-          alt="SKD Event Management Background"
-          initial={{ opacity: 0, scale: 1.05 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-          className="absolute inset-0 w-full h-full object-cover z-0"
-        />
-      </AnimatePresence>
+    <section className="relative h-[100dvh] w-full flex items-center justify-center overflow-hidden bg-[#050505] group"> 
+      
+      {/* ========================================================================
+          PERFORMANCE & ANIMATION FIX:
+          Restored Framer Motion (<motion.img>) for the beautiful initial load animation!
+          Kept images permanently in the DOM to prevent lag.
+          Base image is always opacity 1 after load, top image fades in/out over it.
+          ======================================================================== */}
+      {backgroundImages.map((src, index) => {
+        const isBaseImage = index === 0;
+        const isActive = index === currentImageIndex;
+
+        return (
+          <motion.img
+            key={src}
+            src={src}
+            alt={`SKD Event Management Background ${index + 1}`}
+            loading="eager"
+            fetchPriority={isBaseImage ? "high" : "auto"}
+            decoding="async"
+            // The beautiful initial load animation is back!
+            initial={{ opacity: 0, scale: 1.05 }}
+            animate={{ 
+              opacity: isBaseImage ? 1 : (isActive ? 1 : 0), 
+              scale: isActive ? 1 : 1.05 
+            }}
+            transition={{ duration: 1.5, ease: "easeInOut" }}
+            className={`absolute inset-0 w-full h-full object-cover transform-gpu will-change-[transform,opacity] ${
+              isBaseImage ? "z-0" : "z-10"
+            }`}
+          />
+        );
+      })}
 
       {/* Gradients & Overlays */}
       <div className="absolute inset-0 z-10 bg-gradient-to-b from-black/70 via-black/50 to-[#050505] mix-blend-multiply" />
@@ -42,7 +62,7 @@ export default function Hero() {
       <div className="absolute inset-0 z-[15] bg-transparent group-hover:bg-black/50 transition-colors duration-[1500ms] pointer-events-none" />
       
       {/* Content wrapper - Added pb-20 to prevent collision with scroll arrow on small screens */}
-<div className="relative z-20 text-center px-4 w-full max-w-6xl mx-auto flex flex-col items-center pt-16 md:pt-20 pb-20 md:pb-0">
+      <div className="relative z-20 text-center px-4 w-full max-w-6xl mx-auto flex flex-col items-center pt-16 md:pt-20 pb-20 md:pb-0">
   
         {/* Animated Badge */}
         <motion.div 

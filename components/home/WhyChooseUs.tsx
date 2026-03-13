@@ -32,7 +32,7 @@ const features = [
 
 // Custom SVG for Downward Curve Arrow (Adapted for Light Theme)
 const CurvedArrowDown = () => (
-  <div className="hidden lg:flex items-center justify-center w-24 h-full relative -mx-4 mt-16">
+  <div className="hidden lg:flex items-center justify-center w-24 h-full relative -mx-4 mt-16 transform-gpu">
     <svg width="100%" height="100px" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <motion.path
         initial={{ pathLength: 0, opacity: 0 }}
@@ -65,7 +65,7 @@ const CurvedArrowDown = () => (
 
 // Custom SVG for Upward Curve Arrow (Adapted for Light Theme)
 const CurvedArrowUp = () => (
-  <div className="hidden lg:flex items-center justify-center w-24 h-full relative -mx-4 -mt-16">
+  <div className="hidden lg:flex items-center justify-center w-24 h-full relative -mx-4 -mt-16 transform-gpu">
     <svg width="100%" height="100px" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
       <motion.path
         initial={{ pathLength: 0, opacity: 0 }}
@@ -101,9 +101,11 @@ export default function WhyChooseUs() {
     <section className="py-24 bg-white relative overflow-hidden">
       
       {/* Background Subtle Gradient matching Partners section */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-white z-0" />
-      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#a40049]/5 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#4d002c]/5 rounded-full blur-[100px] pointer-events-none delay-1000" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-white z-0 transform-gpu" />
+      
+      {/* PERFORMANCE FIX: Added transform-gpu and will-change-transform to massive blurs */}
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-[#a40049]/5 rounded-full blur-[100px] pointer-events-none transform-gpu will-change-transform" />
+      <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-[#4d002c]/5 rounded-full blur-[100px] pointer-events-none delay-1000 transform-gpu will-change-transform" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -114,7 +116,7 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/60 backdrop-blur-md border border-gray-200/60 mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/60 backdrop-blur-md border border-gray-200/60 mb-6 shadow-sm transform-gpu"
           >
             <span className="flex h-2 w-2 rounded-full bg-[#a40049] animate-pulse shadow-[0_0_10px_#a40049]" />
             <span className="text-xs font-bold tracking-widest text-gray-800 uppercase">
@@ -126,7 +128,7 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6"
+            className="text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6 transform-gpu"
           >
             Why Choose <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a40049] to-[#4d002c]">Us?</span>
           </motion.h2>
@@ -135,7 +137,7 @@ export default function WhyChooseUs() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg text-gray-500 max-w-2xl mx-auto font-medium"
+            className="text-lg text-gray-500 max-w-2xl mx-auto font-medium transform-gpu"
           >
             We bring passion, innovation, and professionalism to every project, ensuring your event is flawlessly executed.
           </motion.p>
@@ -151,21 +153,21 @@ export default function WhyChooseUs() {
             return (
               <div key={feature.id} className="flex flex-col lg:flex-row items-center relative z-20 w-full lg:w-auto">
                 
-                {/* The Card - Updated for Light Theme */}
+                {/* The Card - Updated for Light Theme with GPU Acceleration */}
                 <motion.div
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.6, delay: index * 0.2 }}
-                  className={`relative w-full sm:w-[340px] lg:w-[260px] xl:w-[280px] p-8 rounded-3xl bg-white border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-[0_20px_40px_-15px_rgba(164,0,73,0.2)] hover:border-[#a40049]/30 transition-all duration-500 hover:-translate-y-2 group overflow-hidden ${isPushedDown ? 'lg:mt-24' : 'lg:-mt-24'}`}
+                  className={`relative w-full sm:w-[340px] lg:w-[260px] xl:w-[280px] p-8 rounded-3xl bg-white border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-[0_20px_40px_-15px_rgba(164,0,73,0.2)] hover:border-[#a40049]/30 transition-all duration-500 hover:-translate-y-2 group overflow-hidden transform-gpu will-change-[transform,opacity] ${isPushedDown ? 'lg:mt-24' : 'lg:-mt-24'}`}
                 >
                   {/* Giant Faded Number in Background */}
-                  <div className="absolute -right-4 -bottom-4 text-[120px] font-extrabold text-gray-50 select-none transition-transform duration-500 group-hover:scale-110 group-hover:text-gray-100">
+                  <div className="absolute -right-4 -bottom-4 text-[120px] font-extrabold text-gray-50 select-none transition-transform duration-500 group-hover:scale-110 group-hover:text-gray-100 transform-gpu">
                     {feature.id}
                   </div>
 
                   {/* Icon Container */}
-                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#a40049]/10 to-[#4d002c]/5 border border-[#a40049]/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 relative z-10">
+                  <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#a40049]/10 to-[#4d002c]/5 border border-[#a40049]/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 relative z-10 transform-gpu">
                     <Icon className="w-8 h-8 text-[#a40049]" />
                   </div>
 
@@ -190,7 +192,7 @@ export default function WhyChooseUs() {
 
                 {/* Connecting Arrows for Mobile/Tablet (Hidden on Desktop) */}
                 {index !== features.length - 1 && (
-                  <div className="lg:hidden flex justify-center py-6">
+                  <div className="lg:hidden flex justify-center py-6 transform-gpu">
                     <svg width="24" height="40" viewBox="0 0 24 40" fill="none">
                       <motion.path
                         initial={{ pathLength: 0 }}

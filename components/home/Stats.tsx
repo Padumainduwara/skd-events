@@ -1,43 +1,30 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { motion, useInView, animate, useMotionValue, useTransform } from "framer-motion";
+import { useRef, useEffect } from "react";
 import { Award, Building2, CalendarCheck, HeartHandshake } from "lucide-react";
 
-// Zero-Lag Smooth Counter Component
+// ========================================================================
+// PERFORMANCE FIX: Zero-Lag Smooth Counter
+// Bypassed React 'useState' completely. Using Framer Motion's useMotionValue 
+// to animate directly in the DOM. This stops hundreds of CPU-heavy re-renders!
+// ========================================================================
 const SmoothCounter = ({ target, duration = 2, suffix = "" }: { target: number, duration?: number, suffix?: string }) => {
-  const [count, setCount] = useState(0);
   const ref = useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
+  
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.floor(latest));
 
   useEffect(() => {
-    if (!isInView) return;
-
-    let startTime: number;
-    let animationFrameId: number;
-
-    const updateCount = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = timestamp - startTime;
-      const percentage = Math.min(progress / (duration * 1000), 1);
-      
-      const easeOut = percentage === 1 ? 1 : 1 - Math.pow(2, -10 * percentage);
-      
-      setCount(Math.floor(easeOut * target));
-
-      if (percentage < 1) {
-        animationFrameId = requestAnimationFrame(updateCount);
-      }
-    };
-
-    animationFrameId = requestAnimationFrame(updateCount);
-
-    return () => cancelAnimationFrame(animationFrameId);
-  }, [isInView, target, duration]);
+    if (isInView) {
+      animate(count, target, { duration: duration, ease: "easeOut" });
+    }
+  }, [isInView, target, duration, count]);
 
   return (
     <span ref={ref} className="tabular-nums">
-      {count}{suffix}
+      <motion.span>{rounded}</motion.span>{suffix}
     </span>
   );
 };
@@ -84,18 +71,18 @@ export default function Stats() {
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* The Premium Floating Glassmorphic Bar */}
+        {/* The Premium Floating Glassmorphic Bar - Added transform-gpu */}
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative rounded-[2rem] md:rounded-[3rem] bg-[#050505] p-6 sm:p-10 md:p-12 shadow-[0_20px_50px_-15px_rgba(164,0,73,0.4)] overflow-hidden"
+          className="relative rounded-[2rem] md:rounded-[3rem] bg-[#050505] p-6 sm:p-10 md:p-12 shadow-[0_20px_50px_-15px_rgba(164,0,73,0.4)] overflow-hidden transform-gpu will-change-[transform,opacity]"
         >
           
-          {/* Ambient Inner Glows */}
-          <div className="absolute top-0 left-1/4 w-40 sm:w-64 h-40 sm:h-64 bg-[#a40049]/20 rounded-full blur-[80px] pointer-events-none" />
-          <div className="absolute bottom-0 right-1/4 w-40 sm:w-64 h-40 sm:h-64 bg-[#ff4d94]/10 rounded-full blur-[80px] pointer-events-none" />
+          {/* Ambient Inner Glows - Added transform-gpu to stop repaint lag */}
+          <div className="absolute top-0 left-1/4 w-40 sm:w-64 h-40 sm:h-64 bg-[#a40049]/20 rounded-full blur-[80px] pointer-events-none transform-gpu will-change-transform" />
+          <div className="absolute bottom-0 right-1/4 w-40 sm:w-64 h-40 sm:h-64 bg-[#ff4d94]/10 rounded-full blur-[80px] pointer-events-none transform-gpu will-change-transform" />
           
           {/* Subtle Border Gradient */}
           <div className="absolute inset-0 rounded-[2rem] md:rounded-[3rem] border border-white/10 pointer-events-none" />
@@ -115,12 +102,12 @@ export default function Stats() {
                 >
                   
                   {/* Glowing Icon - Auto scales on mobile */}
-                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 sm:mb-6 shadow-inner group-hover:bg-[#a40049]/20 transition-colors duration-500">
+                  <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center mb-4 sm:mb-6 shadow-inner group-hover:bg-[#a40049]/20 transition-colors duration-500 transform-gpu">
                     <Icon className="w-5 h-5 sm:w-8 sm:h-8 text-[#ff4d94] group-hover:scale-110 transition-transform duration-500" />
                   </div>
 
                   {/* Animated Counter - Auto scales on mobile */}
-                  <div className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-1 sm:mb-2 tracking-tight">
+                  <div className="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-1 sm:mb-2 tracking-tight transform-gpu">
                     <SmoothCounter target={stat.value} suffix={stat.suffix} />
                   </div>
 

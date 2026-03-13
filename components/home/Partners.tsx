@@ -18,6 +18,24 @@ export default function Partners() {
   return (
     <section className="py-24 bg-white relative overflow-hidden border-t border-gray-100">
       
+      {/* ========================================================================
+          PERFORMANCE FIX: 
+          Pure CSS Keyframes injected here for zero-lag hardware-accelerated 
+          scrolling. This replaces the heavy JS-based Framer Motion infinite loop.
+          ======================================================================== */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes marquee-slide-fast {
+          0% { transform: translate3d(0, 0, 0); }
+          100% { transform: translate3d(-50%, 0, 0); }
+        }
+        .css-marquee-track {
+          display: flex;
+          width: max-content;
+          animation: marquee-slide-fast 25s linear infinite;
+          will-change: transform;
+        }
+      `}} />
+
       {/* Background Subtle Gradient */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-white z-0" />
 
@@ -68,15 +86,8 @@ export default function Partners() {
 
         {/* Scrolling Container */}
         <div className="flex overflow-hidden relative w-full">
-          <motion.div
-            className="flex w-max will-change-transform"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{
-              repeat: Infinity,
-              ease: "linear",
-              duration: 25, // Play with this number to make it faster/slower
-            }}
-          >
+          {/* Using pure CSS class instead of motion.div for infinite scroll */}
+          <div className="css-marquee-track">
             {/* Block 1 */}
             <div className="flex items-center gap-12 md:gap-24 px-6 md:px-12">
               {partnerLogos.map((logo, index) => (
@@ -87,7 +98,9 @@ export default function Partners() {
                   <img
                     src={logo}
                     alt={`Partner Logo ${index + 1}`}
-                    className="w-full h-full object-contain transition-transform duration-500 hover:scale-110"
+                    loading="eager"
+                    decoding="async"
+                    className="w-full h-full object-contain transition-transform duration-500 hover:scale-110 transform-gpu"
                   />
                 </div>
               ))}
@@ -103,12 +116,14 @@ export default function Partners() {
                   <img
                     src={logo}
                     alt={`Partner Logo ${index + 1}`}
-                    className="w-full h-full object-contain transition-transform duration-500 hover:scale-110"
+                    loading="eager"
+                    decoding="async"
+                    className="w-full h-full object-contain transition-transform duration-500 hover:scale-110 transform-gpu"
                   />
                 </div>
               ))}
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 

@@ -53,8 +53,8 @@ export default function Testimonials() {
   return (
     <section className="py-24 md:py-32 bg-white relative overflow-hidden">
       
-      {/* Subtle Background Elements */}
-      <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-[#a40049]/5 to-transparent rounded-full blur-[100px] pointer-events-none" />
+      {/* PERFORMANCE FIX: Added transform-gpu and will-change-transform to massive blur */}
+      <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-[#a40049]/5 to-transparent rounded-full blur-[100px] pointer-events-none transform-gpu will-change-transform" />
 
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -65,7 +65,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-200 mb-6 shadow-sm"
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-gray-200 mb-6 shadow-sm transform-gpu"
           >
             <MessageCircle className="w-4 h-4 text-[#a40049]" />
             <span className="text-xs font-bold tracking-widest text-gray-800 uppercase">
@@ -77,7 +77,7 @@ export default function Testimonials() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight transform-gpu"
           >
             Trusted by <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a40049] to-[#ff4d94]">Visionaries</span>
           </motion.h2>
@@ -94,9 +94,10 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
-              className="relative w-full p-8 rounded-[2rem] bg-white border border-gray-100 shadow-xl shadow-gray-200/40 hover:shadow-[0_20px_40px_-15px_rgba(164,0,73,0.15)] hover:-translate-y-2 transition-all duration-500 group flex flex-col justify-between"
+              /* PERFORMANCE FIX: Added GPU acceleration to cards */
+              className="relative w-full p-8 rounded-[2rem] bg-white border border-gray-100 shadow-xl shadow-gray-200/40 hover:shadow-[0_20px_40px_-15px_rgba(164,0,73,0.15)] hover:-translate-y-2 transition-all duration-500 group flex flex-col justify-between transform-gpu will-change-[transform,opacity]"
             >
-              <div className="absolute top-6 right-6 text-gray-50 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500">
+              <div className="absolute top-6 right-6 text-gray-50 transform group-hover:scale-110 group-hover:-rotate-12 transition-transform duration-500 transform-gpu">
                 <Quote size={80} strokeWidth={1} />
               </div>
               <div className="absolute top-0 left-0 w-full h-[3px] bg-gradient-to-r from-transparent via-[#a40049] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-t-[2rem]" />
@@ -135,7 +136,8 @@ export default function Testimonials() {
           {/* Slider Container */}
           <div className="w-full overflow-hidden px-2 sm:px-4">
             <motion.div 
-              className="flex w-full will-change-transform"
+              /* PERFORMANCE FIX: Added GPU acceleration to the sliding track */
+              className="flex w-full transform-gpu will-change-transform"
               animate={{ x: `-${currentIndex * 100}%` }}
               transition={{ type: "tween", ease: [0.25, 1, 0.5, 1], duration: 0.8 }}
             >
@@ -179,12 +181,12 @@ export default function Testimonials() {
             {testimonials.map((_, idx) => (
               <motion.div
                 key={`dot-${idx}`}
-                className={`h-2 rounded-full cursor-pointer ${
+                className={`h-2 rounded-full cursor-pointer transform-gpu ${
                   currentIndex === idx ? "bg-[#a40049]" : "bg-gray-200"
                 }`}
                 animate={{ width: currentIndex === idx ? 28 : 8 }}
                 transition={{ duration: 0.4, ease: "easeOut" }}
-                onClick={() => setCurrentIndex(idx)} // User can also click dots to navigate manually
+                onClick={() => setCurrentIndex(idx)} 
               />
             ))}
           </div>
