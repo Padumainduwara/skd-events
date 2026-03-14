@@ -16,7 +16,7 @@ export default function Navbar() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -45,7 +45,8 @@ export default function Navbar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 transform-gpu ${
+        /* PERFORMANCE FIX: Added will-change-transform for smooth scrolling without repaint lag */
+        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 transform-gpu will-change-transform ${
           isScrolled ? "py-2 sm:py-4" : "py-4 sm:py-6"
         }`}
       >
@@ -59,7 +60,15 @@ export default function Navbar() {
           >
             {/* Logo Section */}
             <Link href="/" className="flex items-center gap-2 relative z-20 shrink-0" onClick={() => setIsMobileMenuOpen(false)}>
-              <img src="/logo.png" alt="SKD Event Management" className="h-8 sm:h-10 md:h-12 w-auto object-contain" />
+              {/* PERFORMANCE FIX: Added eager loading, high priority, and async decoding so logo caches instantly */}
+              <img 
+                src="/logo.png" 
+                alt="SKD Event Management" 
+                loading="eager"
+                fetchPriority="high"
+                decoding="async"
+                className="h-8 sm:h-10 md:h-12 w-auto object-contain transform-gpu" 
+              />
             </Link>
 
             {/* Desktop Links (Hidden on Mobile) */}
@@ -78,7 +87,8 @@ export default function Navbar() {
                     {isActive && (
                       <motion.div
                         layoutId="active-nav-pill"
-                        className="absolute inset-0 bg-[#a40049]/10 rounded-full"
+                        /* PERFORMANCE FIX: GPU accelerated active pill animation */
+                        className="absolute inset-0 bg-[#a40049]/10 rounded-full transform-gpu will-change-transform"
                         transition={{ type: "spring", stiffness: 400, damping: 30 }}
                       />
                     )}
@@ -91,15 +101,15 @@ export default function Navbar() {
             <div className="flex items-center gap-3 sm:gap-4 relative z-20 shrink-0">
               {/* Desktop CTA Button */}
               <Link href="/contact" className="hidden md:block">
-                <button className="group relative px-5 lg:px-6 py-2 lg:py-2.5 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-full font-bold shadow-lg hover:shadow-[#a40049]/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2">
+                <button className="group relative px-5 lg:px-6 py-2 lg:py-2.5 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-full font-bold shadow-lg hover:shadow-[#a40049]/30 transition-all duration-300 hover:-translate-y-0.5 flex items-center gap-2 transform-gpu">
                   <span className="text-sm lg:text-base">Get a Quote</span>
-                  </button>
+                </button>
               </Link>
 
               {/* Mobile Menu Toggle Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden p-2 rounded-full bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors focus:outline-none"
+                className="md:hidden p-2 rounded-full bg-gray-100 text-gray-900 hover:bg-gray-200 transition-colors focus:outline-none transform-gpu"
               >
                 {isMobileMenuOpen ? <X className="w-5 h-5 sm:w-6 sm:h-6" /> : <Menu className="w-5 h-5 sm:w-6 sm:h-6" />}
               </button>
@@ -118,7 +128,8 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="fixed inset-0 z-[90] bg-white/95 backdrop-blur-2xl md:hidden overflow-y-auto"
+            /* PERFORMANCE FIX: GPU acceleration for heavy backdrop blur */
+            className="fixed inset-0 z-[90] bg-white/95 backdrop-blur-2xl md:hidden overflow-y-auto transform-gpu will-change-[transform,opacity]"
           >
             {/* FIXED: Changed to min-h-[100dvh] and reduced excessive top/bottom paddings */}
             <div className="flex flex-col min-h-[100dvh] px-6 pt-24 pb-8">
@@ -133,6 +144,8 @@ export default function Navbar() {
                       initial={{ opacity: 0, x: -30 }}
                       animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 0.5, delay: index * 0.1 }}
+                      /* PERFORMANCE FIX: GPU accelerate staggered links */
+                      className="transform-gpu will-change-[transform,opacity]"
                     >
                       <Link
                         href={link.path}
@@ -155,14 +168,14 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4 }}
-                /* FIXED: Adjusted top margin for perfect fit */
-                className="mt-auto pt-8 sm:pt-12"
+                /* FIXED: Adjusted top margin for perfect fit. PERFORMANCE FIX: Added GPU tags */
+                className="mt-auto pt-8 sm:pt-12 transform-gpu will-change-[transform,opacity]"
               >
                 <div className="p-5 sm:p-6 bg-gray-50 rounded-3xl border border-gray-100 text-center shadow-sm">
                   <h3 className="text-gray-900 font-bold mb-1 sm:mb-2 text-sm sm:text-base">Ready to plan your event?</h3>
                   <p className="text-gray-500 text-xs sm:text-sm mb-4 sm:mb-6">Let us craft an unforgettable experience.</p>
                   <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                    <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-2xl font-bold shadow-lg shadow-[#a40049]/20 flex items-center justify-center gap-2 text-sm sm:text-base">
+                    <button className="w-full py-3 sm:py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-2xl font-bold shadow-lg shadow-[#a40049]/20 flex items-center justify-center gap-2 text-sm sm:text-base transform-gpu">
                       Get a Quote
                     </button>
                   </Link>
