@@ -108,8 +108,8 @@ Sent via SKD Event Management Website`;
   };
 
   return (
-    <section className="pb-24 md:pb-32 bg-[#FAFAFA] relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="pb-24 md:pb-40 py-8 bg-white relative">
+      <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
         
         {/* =========================================
             SECTION 1: MAIN CONVOCATION SERVICES

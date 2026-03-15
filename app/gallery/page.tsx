@@ -1,6 +1,8 @@
+import dynamic from "next/dynamic";
 import GalleryHero from "@/components/gallery/GalleryHero";
-import GalleryGrid from "@/components/gallery/GalleryGrid";
-import SocialMedia from "@/components/about/SocialMedia";
+
+const GalleryGrid = dynamic(() => import("@/components/gallery/GalleryGrid"));
+const SocialMedia = dynamic(() => import("@/components/about/SocialMedia"));
 
 export const metadata = {
   title: "Portfolio Gallery | SKD Event Management",
@@ -11,8 +13,9 @@ export default function GalleryPage() {
   return (
     <main className="min-h-screen bg-white">
       <GalleryHero />
+      
       <GalleryGrid />
-        <SocialMedia />
+      <SocialMedia />
     </main>
   );
 }

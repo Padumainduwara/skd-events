@@ -84,7 +84,7 @@ export default function Hero() {
           className="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-[1.15] sm:leading-[1.1] mb-6 sm:mb-8 text-white drop-shadow-2xl"
         >
           We Don' t Just <br className="hidden sm:block" />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4d94] to-[#a40049] py-2">
+          <span className="text-transparent bg-clip-text bg-[#ff0066] py-2">
             Plan Events.
           </span><br className="hidden sm:block" />
           We Define Them.
@@ -108,16 +108,30 @@ export default function Hero() {
           className="flex flex-col sm:flex-row gap-4 sm:gap-6 w-full sm:w-auto px-6 sm:px-0"
         >
           <Link href="/contact" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] rounded-full font-bold text-white text-base sm:text-lg shadow-[0_10px_30px_rgba(164,0,73,0.4)] hover:shadow-[0_15px_40px_rgba(164,0,73,0.6)] hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 border border-[#ff4d94]/30">
-              Request a Quote
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform duration-300" />
-            </button>
+            <motion.button 
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.92 }} // ෆෝන් එකෙන් ඔබද්දි ඇතුලට එබෙන ගතිය
+              className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] rounded-full font-bold text-white text-base sm:text-lg shadow-[0_10px_30px_rgba(164,0,73,0.4)] hover:shadow-[0_15px_40px_rgba(164,0,73,0.6)] transition-all duration-300 flex items-center justify-center gap-3 border border-[#ff4d94]/30 transform-gpu overflow-hidden"
+            >
+              {/* Click කරද්දි (Active) පටස් ගාලා එන Dark Effect එක */}
+              <div className="absolute inset-0 bg-black/30 opacity-0 group-active:opacity-100 transition-opacity duration-100 pointer-events-none" />
+              
+              <span className="relative z-10">Request a Quote</span>
+              <ArrowRight className="w-5 h-5 relative z-10 group-hover:translate-x-2 transition-transform duration-300" />
+            </motion.button>
           </Link>
 
           <Link href="/services" className="w-full sm:w-auto">
-            <button className="w-full sm:w-auto px-8 sm:px-10 py-4 rounded-full font-bold text-white border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300">
-              Explore Services
-            </button>
+            <motion.button 
+              whileHover={{ y: -3 }}
+              whileTap={{ scale: 0.92 }} // ෆෝන් එකෙන් ඔබද්දි ඇතුලට එබෙන ගතිය
+              className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 rounded-full font-bold text-white border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 transform-gpu overflow-hidden"
+            >
+              {/* Click කරද්දි (Active) පටස් ගාලා එන White Glow Effect එක */}
+              <div className="absolute inset-0 bg-white/20 opacity-0 group-active:opacity-100 transition-opacity duration-100 pointer-events-none" />
+              
+              <span className="relative z-10">Explore Services</span>
+            </motion.button>
           </Link>
         </motion.div>
       </div>

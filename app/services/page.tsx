@@ -1,8 +1,6 @@
 import dynamic from "next/dynamic";
 import ServicesHero from "@/components/services/ServicesHero";
 
-// PERFORMANCE FIX: Lazy load the heavy content without { ssr: false }
-// The ServicesContent component already handles localStorage safely via useEffect.
 const ServicesContent = dynamic(() => import("@/components/services/ServicesContent"));
 const SocialMedia = dynamic(() => import("@/components/about/SocialMedia"));
 

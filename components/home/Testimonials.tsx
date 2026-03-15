@@ -128,9 +128,6 @@ export default function Testimonials() {
           ))}
         </div>
 
-        {/* =========================================
-            MOBILE/TABLET: Auto-Sliding Carousel
-            ========================================= */}
         <div className="flex lg:hidden flex-col items-center w-full">
           
           {/* Slider Container */}

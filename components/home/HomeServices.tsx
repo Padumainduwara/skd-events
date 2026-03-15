@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Crown, Sparkles } from "lucide-react";
 
 // PDF Extracted Content
 const services = [
@@ -83,7 +83,7 @@ export default function HomeServices() {
             className="w-full lg:w-auto flex flex-col items-center lg:items-start"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 mb-6 shadow-sm">
-              <Sparkles className="w-4 h-4 text-[#a40049]" />
+              <Crown className="w-4 h-4 text-[#a40049]" />
               <span className="text-xs font-bold tracking-widest text-gray-800 uppercase">
                 Premium Offerings
               </span>

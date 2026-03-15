@@ -46,11 +46,13 @@ export default function AboutHero() {
             <motion.button 
               onClick={handleScroll}
               whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.95 }}
-              className="mt-4 group relative px-8 py-4 bg-gray-900 rounded-full font-bold text-white shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-3 transform-gpu"
+              whileTap={{ scale: 0.92 }} // ෆෝන් එකෙන් ඔබද්දි ඇතුලට එබෙන ගතිය (Deep press effect)
+              className="mt-4 group relative px-8 py-4 bg-gray-900 rounded-full font-bold text-white shadow-lg hover:shadow-[0_10px_40px_-10px_rgba(164,0,73,0.5)] transition-all duration-300 flex items-center gap-3 transform-gpu overflow-hidden"
             >
-              Explore Our Story
-              <ArrowDown className="w-5 h-5 group-hover:translate-y-1 transition-transform duration-300 text-[#ff4d94]" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#a40049] to-[#4d002c] opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 pointer-events-none" />
+              <span className="relative z-10 transition-colors duration-300">Explore Our Story</span>
+              
+              <ArrowDown className="w-5 h-5 relative z-10 group-hover:translate-y-1 transition-all duration-300 text-[#ff4d94] group-hover:text-white group-active:text-white" />
             </motion.button>
           </motion.div>
 
