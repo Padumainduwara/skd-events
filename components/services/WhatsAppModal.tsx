@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Send, ShoppingBag, CheckCircle2, Trash2 } from "lucide-react";
+import { X, Send, ShoppingBag, CheckCircle2, Trash2, ChevronDown, Mail } from "lucide-react";
 
 interface WhatsAppModalProps {
   isOpen: boolean;
@@ -17,15 +17,104 @@ type ParsedItem = { original: string; item: string };
 type SubCatGroup = { [subCat: string]: ParsedItem[] };
 type MainCatGroup = { [mainCat: string]: SubCatGroup };
 
+// --- CUSTOM REUSABLE DROPDOWN COMPONENT ---
+// This replaces the ugly default HTML <select> with a beautiful, animated custom dropdown
+const CustomDropdown = ({ 
+  options, 
+  value, 
+  onChange, 
+  name 
+}: { 
+  options: string[], 
+  value: string, 
+  onChange: (name: string, value: string) => void,
+  name: string 
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative w-full" ref={dropdownRef}>
+      {/* Hidden input for form validation */}
+      <input type="hidden" name={name} value={value} required />
+      
+      <button
+        type="button"
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium text-left focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all flex items-center justify-between"
+      >
+        <span className={value ? "text-gray-900" : "text-gray-400"}>
+          {value || "Select an option..."}
+        </span>
+        <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.2 }}
+            className="absolute z-50 w-full mt-2 bg-white border border-gray-100 rounded-xl shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] overflow-hidden max-h-60 overflow-y-auto custom-scrollbar"
+          >
+            {options.map((option) => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => {
+                  onChange(name, option);
+                  setIsOpen(false);
+                }}
+                className={`w-full text-left px-4 py-3 text-sm transition-colors ${
+                  value === option 
+                    ? "bg-[#a40049]/10 text-[#a40049] font-bold" 
+                    : "text-gray-700 hover:bg-gray-50"
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
 export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clearCart }: WhatsAppModalProps) {
   const [mounted, setMounted] = useState(false);
   const [showConfirmClear, setShowConfirmClear] = useState(false); 
+  const formRef = useRef<HTMLFormElement>(null);
 
+  // Form State with Default Dropdown Values
   const [formData, setFormData] = useState({
-    companyName: "", address: "", email: "", contactPerson: "", 
-    contactNumber: "", whatsappNumber: "", eventName: "", 
-    eventDate: "", eventLocation: "", guestCount: ""
+    organizationName: "", 
+    address: "", 
+    email: "", 
+    contactPerson: "", 
+    officeNumber: "", 
+    whatsappNumber: "", 
+    eventName: "Convocation", // Default value
+    eventDate: "", 
+    eventLocation: "BMICH - Main Hall", // Default value
+    guestCount: "0-100", // Default value
+    studentCount: "0-100" // Default value
   });
+
+  // Get Today's Date for Min Date Validation
+  const todayDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     setMounted(true);
@@ -43,11 +132,15 @@ export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clear
     };
   }, [isOpen]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // FIXED: No more JS window.confirm! Uses the Custom UI below.
+  // Custom handler for our new CustomDropdown
+  const handleDropdownChange = (name: string, value: string) => {
+    setFormData({ ...formData, [name]: value });
+  };
+
   const executeClearCart = () => {
     clearCart(); 
     setShowConfirmClear(false);
@@ -76,12 +169,22 @@ export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clear
     }, {});
   }, [cart]);
 
-  const handleWhatsAppSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  // Unified Submit Handler for both WhatsApp and Email
+  const handleSubmitAction = (type: 'whatsapp' | 'email') => {
     if (cart.length === 0) {
       alert("Please select at least one service before requesting a quotation.");
       return;
     }
+
+    // Trigger Native HTML5 Form Validation
+    if (formRef.current && !formRef.current.checkValidity()) {
+      formRef.current.reportValidity();
+      return;
+    }
+
+    // Format Date from YYYY-MM-DD to DD-MM-YYYY for the message
+    const dateParts = formData.eventDate.split('-');
+    const formattedDate = dateParts.length === 3 ? `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}` : formData.eventDate;
 
     let formattedCartText = "";
     Object.entries(groupedCart).forEach(([mainCat, subCats]) => {
@@ -100,27 +203,36 @@ export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clear
 
 📋 *SELECTED EVENT PACKAGE:*${formattedCartText}
 
-🏢 *Company DETAILS:*
-• *Company:* ${formData.companyName}
+🏢 *ORGANIZATION DETAILS:*
+• *Organization Name:* ${formData.organizationName}
 • *Contact Person:* ${formData.contactPerson}
-• *Address:* ${formData.address}
+• *Office/Uni Address:* ${formData.address}
 
 📞 *CONTACT INFO:*
 • *Email:* ${formData.email}
-• *Phone:* ${formData.contactNumber}
-• *WhatsApp:* ${formData.whatsappNumber || 'N/A'}
+• *WhatsApp Number:* ${formData.whatsappNumber}
+• *Office Number:* ${formData.officeNumber || 'N/A'}
 
 🎉 *EVENT DETAILS:*
 • *Event Name:* ${formData.eventName}
-• *Date:* ${formData.eventDate}
+• *Event Date:* ${formattedDate}
 • *Location:* ${formData.eventLocation}
-• *Expected Guests:* ${formData.guestCount}
+• *Guest Count:* ${formData.guestCount}
+• *Student Count:* ${formData.studentCount}
 
 ─────────────────────
 Sent via SKD Event Management Website`;
+
+    if (type === 'whatsapp') {
+      const encodedText = encodeURIComponent(text);
+      window.open(`https://wa.me/94777238387?text=${encodedText}`, '_blank');
+    } else {
+      // Create MailTo Link (Using encodeURIComponent for proper line breaks)
+      const subject = encodeURIComponent(`New Quotation Request - ${formData.organizationName}`);
+      const body = encodeURIComponent(text);
+      window.open(`mailto:info@skdevents.lk?subject=${subject}&body=${body}`, '_blank');
+    }
     
-    const encodedText = encodeURIComponent(text);
-    window.open(`https://wa.me/94718869555?text=${encodedText}`, '_blank');
     onClose();
   };
 
@@ -141,7 +253,7 @@ Sent via SKD Event Management Website`;
             animate={{ opacity: 1, scale: 1, y: 0 }} 
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="relative w-full max-w-[1100px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] transform-gpu will-change-[transform,opacity]"
+            className="relative w-full max-w-[1150px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] transform-gpu will-change-[transform,opacity]"
           >
             {/* HEADER */}
             <div className="px-6 sm:px-10 py-5 sm:py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-20 shadow-sm shrink-0">
@@ -174,7 +286,7 @@ Sent via SKD Event Management Website`;
                       </span>
                       {cart.length > 0 && (
                         <button 
-                          onClick={() => setShowConfirmClear(true)} // FIXED: Opens custom UI confirm
+                          onClick={() => setShowConfirmClear(true)} 
                           className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors whitespace-nowrap shrink-0"
                         >
                           <Trash2 className="w-3.5 h-3.5" /> Clear All
@@ -233,39 +345,39 @@ Sent via SKD Event Management Website`;
 
                 {/* RIGHT COLUMN: FORM */}
                 <div className="lg:col-span-7 order-2 p-6 sm:p-8 lg:p-10 pt-8 sm:pt-10">
-                  <form id="whatsappForm" onSubmit={handleWhatsAppSubmit} className="space-y-6 sm:space-y-8 max-w-2xl mx-auto">
+                  <form id="quoteForm" ref={formRef} className="space-y-6 sm:space-y-8 mx-auto">
                     
                     <div>
                       <h4 className="text-lg sm:text-xl font-extrabold text-gray-900 flex items-center gap-2.5 mb-2">
                         <span className="w-7 h-7 rounded-full bg-[#a40049] flex items-center justify-center text-xs font-bold text-white shadow-sm">1</span>
-                        Company Details
+                        Organization Details
                       </h4>
                       <p className="text-[11px] sm:text-xs text-gray-500 font-medium ml-10">We need this information to process your request.</p>
                       
-                      <div className="grid grid-cols-1 gap-4 sm:gap-5 mt-5 ml-0 sm:ml-9">
-                        <div className="space-y-1.5">
-                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Company Name <span className="text-red-500">*</span></label>
-                          <input required minLength={2} type="text" name="companyName" value={formData.companyName} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mt-5 ml-0 sm:ml-9">
+                        <div className="space-y-1.5 sm:col-span-2">
+                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Organization Name <span className="text-red-500">*</span></label>
+                          <input required minLength={2} type="text" name="organizationName" value={formData.organizationName} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
                         </div>
                         <div className="space-y-1.5">
                           <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Contact Person <span className="text-red-500">*</span></label>
                           <input required minLength={2} type="text" name="contactPerson" value={formData.contactPerson} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Company Address <span className="text-red-500">*</span></label>
-                          <input required type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
-                        </div>
-                        <div className="space-y-1.5">
                           <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Email Address <span className="text-red-500">*</span></label>
                           <input required type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
                         </div>
-                        <div className="space-y-1.5">
-                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Contact Number <span className="text-red-500">*</span></label>
-                          <input required type="tel" pattern="[0-9+\-\s()]+" title="Please enter a valid phone number" name="contactNumber" value={formData.contactNumber} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
+                        <div className="space-y-1.5 sm:col-span-2">
+                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Office / University Address <span className="text-red-500">*</span></label>
+                          <input required type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
                         </div>
                         <div className="space-y-1.5">
-                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">WhatsApp Number <span className="text-gray-400 normal-case font-normal">(Optional)</span></label>
-                          <input type="tel" pattern="[0-9+\-\s()]+" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all placeholder:text-gray-300" placeholder="+94 77 123 4567"/>
+                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">WhatsApp Number <span className="text-red-500">*</span></label>
+                          <input required type="tel" pattern="[0-9+\-\s()]+" title="Please enter a valid phone number" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all placeholder:text-gray-300" placeholder="+94 7X XXX XXXX"/>
+                        </div>
+                        <div className="space-y-1.5">
+                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Office Contact Number <span className="text-gray-400 normal-case font-normal">(Optional)</span></label>
+                          <input type="tel" pattern="[0-9+\-\s()]+" name="officeNumber" value={formData.officeNumber} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all placeholder:text-gray-300" placeholder="011 XXXXXXX"/>
                         </div>
                       </div>
                     </div>
@@ -275,23 +387,74 @@ Sent via SKD Event Management Website`;
                         <span className="w-7 h-7 rounded-full bg-[#a40049] flex items-center justify-center text-xs font-bold text-white shadow-sm">2</span>
                         Event Details
                       </h4>
-                      <div className="grid grid-cols-1 gap-4 sm:gap-5 mt-5 ml-0 sm:ml-9">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mt-5 ml-0 sm:ml-9">
+                        
+                        {/* CUSTOM DROPDOWN: EVENT NAME */}
                         <div className="space-y-1.5">
                           <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Event Name <span className="text-red-500">*</span></label>
-                          <input required type="text" name="eventName" value={formData.eventName} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
+                          <CustomDropdown 
+                            name="eventName"
+                            value={formData.eventName}
+                            onChange={handleDropdownChange}
+                            options={[
+                              "Convocation",
+                              "Corporate",
+                              "Seminar",
+                              "Product Launched",
+                              "Award Ceremony"
+                            ]}
+                          />
                         </div>
+
+                        {/* DATE PICKER */}
                         <div className="space-y-1.5">
                           <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Event Date <span className="text-red-500">*</span></label>
-                          <input required type="date" name="eventDate" value={formData.eventDate} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
+                          <input required type="date" min={todayDate} name="eventDate" value={formData.eventDate} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all cursor-pointer"/>
                         </div>
-                        <div className="space-y-1.5">
+
+                        {/* CUSTOM DROPDOWN: EVENT LOCATION */}
+                        <div className="space-y-1.5 sm:col-span-2">
                           <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Event Location <span className="text-red-500">*</span></label>
-                          <input required type="text" name="eventLocation" value={formData.eventLocation} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
+                          <CustomDropdown 
+                            name="eventLocation"
+                            value={formData.eventLocation}
+                            onChange={handleDropdownChange}
+                            options={[
+                              "BMICH - Main Hall",
+                              "BMICH - Lotus Hall",
+                              "BMICH - Jasmine Hall",
+                              "BMICH - Sirimavo Bandaranaike Exhibition Centre",
+                              "BMICH - Committee Room",
+                              "Nelum Pokuna Auditorium",
+                              "Nagananda Auditorium",
+                              "Colombo Campus Auditorium",
+                              "Other"
+                            ]}
+                          />
                         </div>
+
+                        {/* CUSTOM DROPDOWN: GUEST COUNT */}
                         <div className="space-y-1.5">
-                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Guest / Student Count <span className="text-red-500">*</span></label>
-                          <input required type="number" min="1" name="guestCount" value={formData.guestCount} onChange={handleInputChange} className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-sm font-medium focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/>
+                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Guest Count <span className="text-red-500">*</span></label>
+                          <CustomDropdown 
+                            name="guestCount"
+                            value={formData.guestCount}
+                            onChange={handleDropdownChange}
+                            options={["0-100", "101-200", "201-500", "501-1000", "Above 1000"]}
+                          />
                         </div>
+
+                        {/* CUSTOM DROPDOWN: STUDENT COUNT */}
+                        <div className="space-y-1.5">
+                          <label className="text-[11px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider ml-1">Student Count <span className="text-red-500">*</span></label>
+                          <CustomDropdown 
+                            name="studentCount"
+                            value={formData.studentCount}
+                            onChange={handleDropdownChange}
+                            options={["0-100", "101-200", "201-500", "501-1000", "Above 1000"]}
+                          />
+                        </div>
+
                       </div>
                     </div>
                   </form>
@@ -299,15 +462,17 @@ Sent via SKD Event Management Website`;
               </div>
             </div>
 
-            {/* FOOTER */}
+            {/* FOOTER (DUAL SUBMIT BUTTONS) */}
             <div className="px-6 sm:px-10 py-5 sm:py-6 border-t border-gray-100 bg-white shrink-0">
-              <div className="max-w-sm mx-auto">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-2xl mx-auto">
+                
+                {/* WHATSAPP BUTTON */}
                 <motion.button 
                   whileTap={{ scale: 0.98 }}
-                  type="submit" 
-                  form="whatsappForm" 
+                  type="button" 
+                  onClick={() => handleSubmitAction('whatsapp')}
                   disabled={cart.length === 0}
-                  className={`w-full py-4 rounded-xl sm:rounded-2xl font-extrabold flex items-center justify-center gap-3 transition-all transform-gpu ${
+                  className={`w-full sm:flex-1 py-4 rounded-xl sm:rounded-2xl font-extrabold flex items-center justify-center gap-2.5 transition-all transform-gpu ${
                     cart.length > 0 
                       ? "bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white shadow-[0_10px_30px_-10px_rgba(37,211,102,0.5)] hover:shadow-[0_15px_40px_-10px_rgba(37,211,102,0.6)] hover:-translate-y-1" 
                       : "bg-gray-100 text-gray-400 cursor-not-allowed"
@@ -316,15 +481,27 @@ Sent via SKD Event Management Website`;
                   <Send className="w-5 h-5 shrink-0" />
                   <span className="text-sm sm:text-base tracking-wide">Send via WhatsApp</span>
                 </motion.button>
-                <p className="text-[10px] sm:text-xs text-center text-gray-400 mt-3 font-medium">
-                  Your WhatsApp will open securely with a pre-filled quotation.
-                </p>
+
+                {/* EMAIL BUTTON */}
+                <motion.button 
+                  whileTap={{ scale: 0.98 }}
+                  type="button" 
+                  onClick={() => handleSubmitAction('email')}
+                  disabled={cart.length === 0}
+                  className={`w-full sm:flex-1 py-4 rounded-xl sm:rounded-2xl font-extrabold flex items-center justify-center gap-2.5 transition-all transform-gpu ${
+                    cart.length > 0 
+                      ? "bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white shadow-[0_10px_30px_-10px_rgba(164,0,73,0.5)] hover:shadow-[0_15px_40px_-10px_rgba(164,0,73,0.6)] hover:-translate-y-1" 
+                      : "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  }`}
+                >
+                  <Mail className="w-5 h-5 shrink-0" />
+                  <span className="text-sm sm:text-base tracking-wide">Send via Email</span>
+                </motion.button>
+                
               </div>
             </div>
 
-            {/* =========================================
-                CUSTOM CONFIRMATION UI (INSIDE MODAL)
-                ========================================= */}
+            {/* CUSTOM CONFIRMATION UI (INSIDE MODAL) */}
             <AnimatePresence>
               {showConfirmClear && (
                 <div className="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-white/90 backdrop-blur-sm rounded-[2rem] sm:rounded-[2.5rem]">

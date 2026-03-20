@@ -110,10 +110,9 @@ export default function Hero() {
           <Link href="/contact" className="w-full sm:w-auto">
             <motion.button 
               whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.92 }} // ෆෝන් එකෙන් ඔබද්දි ඇතුලට එබෙන ගතිය
+              whileTap={{ scale: 0.92 }} 
               className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] rounded-full font-bold text-white text-base sm:text-lg shadow-[0_10px_30px_rgba(164,0,73,0.4)] hover:shadow-[0_15px_40px_rgba(164,0,73,0.6)] transition-all duration-300 flex items-center justify-center gap-3 border border-[#ff4d94]/30 transform-gpu overflow-hidden"
             >
-              {/* Click කරද්දි (Active) පටස් ගාලා එන Dark Effect එක */}
               <div className="absolute inset-0 bg-black/30 opacity-0 group-active:opacity-100 transition-opacity duration-100 pointer-events-none" />
               
               <span className="relative z-10">Request a Quote</span>
@@ -124,10 +123,9 @@ export default function Hero() {
           <Link href="/services" className="w-full sm:w-auto">
             <motion.button 
               whileHover={{ y: -3 }}
-              whileTap={{ scale: 0.92 }} // ෆෝන් එකෙන් ඔබද්දි ඇතුලට එබෙන ගතිය
+              whileTap={{ scale: 0.92 }} 
               className="w-full sm:w-auto group relative px-8 sm:px-10 py-4 rounded-full font-bold text-white border border-white/30 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 transform-gpu overflow-hidden"
             >
-              {/* Click කරද්දි (Active) පටස් ගාලා එන White Glow Effect එක */}
               <div className="absolute inset-0 bg-white/20 opacity-0 group-active:opacity-100 transition-opacity duration-100 pointer-events-none" />
               
               <span className="relative z-10">Explore Services</span>

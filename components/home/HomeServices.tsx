@@ -46,7 +46,7 @@ const services = [
 
 export default function HomeServices() {
   return (
-    <section className="py-20 md:py-28 bg-white relative overflow-hidden">
+    <section className="py-14 md:py-20 bg-white relative overflow-hidden">
       
       {/* PERFORMANCE FIX: Added Anti-Jitter properties (backface-visibility, perspective) for buttery smooth mobile scrolling */}
       <style dangerouslySetInnerHTML={{__html: `

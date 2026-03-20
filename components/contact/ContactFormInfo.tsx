@@ -1,70 +1,38 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { MapPin, PhoneCall, Mail, Info, Send, ChevronDown } from "lucide-react";
-import { useState, useRef, useEffect } from "react";
+import { MapPin, PhoneCall, Mail, Info, Send } from "lucide-react";
+import { useState } from "react";
 import Link from "next/link";
 
 export default function ContactFormInfo() {
   // States
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const [selectedTopic, setSelectedTopic] = useState("");
   const [isPrivacyAccepted, setIsPrivacyAccepted] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
-
-  // Topics updated from PDF Context (Added Refund/Cancellation)
-  const topics = [
-    "Convocation Event",
-    "Corporate Event / Launch",
-    "Entertainment Event",
-    "Refund / Cancellation Query",
-    "Other Query"
-  ];
-
-  // Close dropdown if clicked outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!selectedTopic) {
-      alert("Please select a Topic / Event Type.");
-      return;
-    }
     if (!isPrivacyAccepted) {
       return; // Extra safety, button is disabled anyway
     }
     // Handle form submission logic here
-    alert("Form submitted successfully!");
+    alert("Message sent successfully!");
   };
 
   return (
-    <section className="py-20 md:py-32 bg-white relative overflow-hidden z-10">
+    <section className="py-12 md:py-20 bg-white relative overflow-hidden z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
           
           {/* =========================================
-              LEFT COLUMN: CONTACT INFO (BENTO GRID)
+              LEFT COLUMN: CONTACT INFO (UNCHANGED)
               ========================================= */}
           <div className="lg:col-span-2 space-y-6">
-            
-            {/* Responsive Alignment added here: 
-              flex-col items-center text-center for mobile
-              lg:items-start lg:text-left for desktop 
-            */}
+          
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              /* PERFORMANCE FIX: GPU Acceleration */
               className="flex flex-col items-center text-center lg:items-start lg:text-left transform-gpu will-change-[transform,opacity]"
             >
               <h2 className="text-3xl font-bold text-gray-900 mb-3">Contact Details</h2>
@@ -72,11 +40,9 @@ export default function ContactFormInfo() {
                 Experience transparent communication and a client-first mindset. We are ready to listen.
               </p>
             </motion.div>
-
-            {/* Address Card */}
+          
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
-              /* PERFORMANCE FIX: GPU Acceleration */
               className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300 transform-gpu will-change-[transform,opacity]"
             >
               <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors transform-gpu">
@@ -91,7 +57,6 @@ export default function ContactFormInfo() {
             {/* Contact Card */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}
-              /* PERFORMANCE FIX: GPU Acceleration */
               className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300 transform-gpu will-change-[transform,opacity]"
             >
               <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors transform-gpu">
@@ -103,10 +68,9 @@ export default function ContactFormInfo() {
               </div>
             </motion.div>
 
-            {/* Email Card (Updated with PDF Refund Info) */}
+            {/* Email Card */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}
-              /* PERFORMANCE FIX: GPU Acceleration */
               className="p-6 rounded-3xl bg-gray-50 border border-gray-100 flex gap-5 group hover:bg-white hover:shadow-xl hover:border-[#a40049]/20 transition-all duration-300 transform-gpu will-change-[transform,opacity]"
             >
               <div className="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center flex-shrink-0 group-hover:bg-[#a40049]/10 transition-colors transform-gpu">
@@ -123,7 +87,6 @@ export default function ContactFormInfo() {
             {/* PDF Extracted Guideline */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.4 }}
-              /* PERFORMANCE FIX: GPU Acceleration */
               className="p-6 rounded-3xl bg-gradient-to-br from-[#a40049]/5 to-transparent border border-[#a40049]/20 flex gap-5 relative overflow-hidden transform-gpu will-change-[transform,opacity]"
             >
               <div className="absolute top-0 left-0 w-1 h-full bg-[#a40049]" />
@@ -141,14 +104,13 @@ export default function ContactFormInfo() {
           </div>
 
           {/* =========================================
-              RIGHT COLUMN: PREMIUM CONTACT FORM
+              RIGHT COLUMN: PROFESSIONAL CONTACT FORM
               ========================================= */}
           <motion.div 
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            /* PERFORMANCE FIX: Added GPU Acceleration to the heavy shadow container */
             className="lg:col-span-3 bg-white border border-gray-200 shadow-2xl shadow-gray-200/50 rounded-[2.5rem] p-6 sm:p-8 md:p-12 relative overflow-hidden transform-gpu will-change-[transform,opacity]"
           >
             {/* Form Top Decor */}
@@ -156,72 +118,39 @@ export default function ContactFormInfo() {
 
             <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mb-8">Send Us A Message</h3>
 
-            {/* Form fields based on PDF requirements */}
+            {/* Standard Professional Form */}
             <form className="space-y-6" onSubmit={handleSubmit}>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {/* Name */}
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-700 ml-1">Your Name *</label>
+                  <label className="text-sm font-bold text-gray-700 ml-1">Your Name <span className="text-red-500">*</span></label>
                   <input type="text" required placeholder="e.g. Kasun Perera" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all" />
                 </div>
                 {/* Email */}
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-700 ml-1">Email Address *</label>
+                  <label className="text-sm font-bold text-gray-700 ml-1">Email Address <span className="text-red-500">*</span></label>
                   <input type="email" required placeholder="name@company.com" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                {/* Custom Modern Dropdown for Topic */}
-                <div className="space-y-2 relative" ref={dropdownRef}>
-                  <label className="text-sm font-bold text-gray-700 ml-1">Topic | Event Type *</label>
-                  
-                  <div 
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className={`w-full px-5 py-4 bg-gray-50 border ${isDropdownOpen ? 'border-[#a40049] ring-2 ring-[#a40049]/30' : 'border-gray-200'} rounded-2xl text-gray-900 cursor-pointer flex justify-between items-center transition-all`}
-                  >
-                    <span className={selectedTopic ? "text-gray-900" : "text-gray-400"}>
-                      {selectedTopic || "Select an event type"}
-                    </span>
-                    <ChevronDown className={`w-5 h-5 text-gray-500 transition-transform duration-300 transform-gpu ${isDropdownOpen ? 'rotate-180' : ''}`} />
-                  </div>
-
-                  {/* Dropdown Options List */}
-                  {isDropdownOpen && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      /* PERFORMANCE FIX: Added GPU Acceleration to the dropdown */
-                      className="absolute z-20 w-full mt-2 bg-white border border-gray-100 rounded-2xl shadow-xl overflow-hidden transform-gpu will-change-[transform,opacity]"
-                    >
-                      {topics.map((topic) => (
-                        <div 
-                          key={topic}
-                          onClick={() => { setSelectedTopic(topic); setIsDropdownOpen(false); }}
-                          className="px-5 py-3 hover:bg-[#a40049]/5 hover:text-[#a40049] cursor-pointer text-gray-700 font-medium transition-colors"
-                        >
-                          {topic}
-                        </div>
-                      ))}
-                    </motion.div>
-                  )}
-                  {/* Hidden native input for validation purposes */}
-                  <input type="hidden" required value={selectedTopic} />
-                </div>
-
-                {/* Min Students/Guests */}
+                {/* Phone Number */}
                 <div className="space-y-2">
-                  <label className="text-sm font-bold text-gray-700 ml-1">Min. Student | Guest Count</label>
-                  <input type="number" min="1" placeholder="e.g. 500" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all" />
+                  <label className="text-sm font-bold text-gray-700 ml-1">Contact Number <span className="text-red-500">*</span></label>
+                  <input type="tel" required placeholder="e.g. +94 7X XXX XXXX" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all" />
+                </div>
+                {/* Subject / Company */}
+                <div className="space-y-2">
+                  <label className="text-sm font-bold text-gray-700 ml-1">Subject / Company</label>
+                  <input type="text" placeholder="e.g. General Inquiry" className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all" />
                 </div>
               </div>
 
-              {/* Description */}
+              {/* Message */}
               <div className="space-y-2">
-                <label className="text-sm font-bold text-gray-700 ml-1">Event Description & Requirements *</label>
-                <textarea rows={5} required placeholder="Tell us more about your event date, location, and specific needs..." className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all resize-none"></textarea>
+                <label className="text-sm font-bold text-gray-700 ml-1">Your Message <span className="text-red-500">*</span></label>
+                <textarea rows={5} required placeholder="How can we help you?..." className="w-full px-5 py-4 bg-gray-50 border border-gray-200 rounded-2xl text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] transition-all resize-none"></textarea>
               </div>
 
               {/* Privacy Policy Checkbox (Controls Button state) */}
@@ -249,15 +178,20 @@ export default function ContactFormInfo() {
               <button 
                 type="submit" 
                 disabled={!isPrivacyAccepted}
-                className={`w-full group relative px-8 py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-500 transform-gpu
+                className={`w-full group relative px-8 py-5 rounded-2xl font-bold flex items-center justify-center gap-3 transition-all duration-300 transform-gpu overflow-hidden
                   ${isPrivacyAccepted 
-                    ? "bg-gray-900 text-white shadow-lg hover:shadow-xl hover:bg-gradient-to-r hover:from-[#a40049] hover:to-[#4d002c] cursor-pointer" 
-                    : "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    ? "bg-gradient-to-r from-[#a40049] to-[#4d002c] border border-[#ff4d94]/30 text-white shadow-[0_10px_30px_rgba(164,0,73,0.4)] hover:shadow-[0_15px_40px_rgba(164,0,73,0.6)] cursor-pointer" 
+                    : "bg-gray-200 text-gray-400 border-transparent cursor-not-allowed"
                   }
                 `}
               >
-                Send Inquiry
-                <Send className={`w-5 h-5 transition-transform duration-300 transform-gpu ${isPrivacyAccepted ? "group-hover:translate-x-1 group-hover:-translate-y-1" : ""}`} />
+                {/* Active click overlay effect */}
+                {isPrivacyAccepted && (
+                  <div className="absolute inset-0 bg-black/30 opacity-0 group-active:opacity-100 transition-opacity duration-100 pointer-events-none" />
+                )}
+                
+                <span className="relative z-10">Send Message</span>
+                <Send className={`w-5 h-5 relative z-10 transition-transform duration-300 transform-gpu ${isPrivacyAccepted ? "group-hover:translate-x-1 group-hover:-translate-y-1" : ""}`} />
               </button>
 
             </form>

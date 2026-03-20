@@ -98,7 +98,7 @@ const CurvedArrowUp = () => (
 
 export default function WhyChooseUs() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-14 bg-white relative overflow-hidden">
       
       {/* Background Subtle Gradient matching Partners section */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-gray-50 via-white to-white z-0 transform-gpu" />

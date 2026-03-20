@@ -51,7 +51,7 @@ export default function Testimonials() {
   }, []);
 
   return (
-    <section className="py-24 md:py-32 bg-white relative overflow-hidden">
+    <section className="py-18 md:py-24 bg-white relative overflow-hidden">
       
       {/* PERFORMANCE FIX: Added transform-gpu and will-change-transform to massive blur */}
       <div className="absolute top-1/4 left-[-10%] w-[500px] h-[500px] bg-gradient-to-br from-[#a40049]/5 to-transparent rounded-full blur-[100px] pointer-events-none transform-gpu will-change-transform" />

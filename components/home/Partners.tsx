@@ -16,13 +16,8 @@ const partnerLogos = [
 
 export default function Partners() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden border-t border-gray-100">
+    <section className="py-18 bg-white relative overflow-hidden border-t border-gray-100">
       
-      {/* ========================================================================
-          PERFORMANCE FIX: 
-          Pure CSS Keyframes injected here for zero-lag hardware-accelerated 
-          scrolling. This replaces the heavy JS-based Framer Motion infinite loop.
-          ======================================================================== */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes marquee-slide-fast {
           0% { transform: translate3d(0, 0, 0); }

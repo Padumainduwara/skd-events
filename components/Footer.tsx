@@ -13,20 +13,14 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-50 relative overflow-hidden pt-20 pb-10 border-t border-gray-200">
+    <footer className="bg-gray-50 relative overflow-hidden pt-16 pb-8 border-t border-gray-200">
       
-      {/* Subtle Background Glows specifically for Light Theme */}
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-gradient-to-bl from-[#a40049]/5 to-transparent rounded-full blur-[100px] pointer-events-none transform-gpu" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[#ff4d94]/5 to-transparent rounded-full blur-[100px] pointer-events-none transform-gpu" />
 
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
-        {/* Adjusted Grid layout for better spacing on Desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 mb-16">
-          
-          {/* =========================================
-              COLUMN 1: BRANDING (Spans 4 cols on large)
-              ========================================= */}
+    
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-8 mb-8"> 
           <motion.div 
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
             className="lg:col-span-4"
@@ -54,9 +48,6 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* =========================================
-              COLUMN 2: QUICK LINKS (Spans 3 cols)
-              ========================================= */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}
             className="lg:col-span-3 lg:pl-8"
@@ -82,9 +73,6 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* =========================================
-              COLUMN 3: LEGAL LINKS (Spans 2 cols)
-              ========================================= */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}
             className="lg:col-span-2"
@@ -108,9 +96,6 @@ export default function Footer() {
             </ul>
           </motion.div>
 
-          {/* =========================================
-              COLUMN 4: CONTACT INFO (Spans 3 cols)
-              ========================================= */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.3 }}
             className="lg:col-span-3"
@@ -149,9 +134,6 @@ export default function Footer() {
 
         </div>
 
-        {/* =========================================
-            BOTTOM COPYRIGHT & DEVELOPER CREDIT
-            ========================================= */}
         <motion.div 
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.4 }}
           className="border-t border-gray-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"

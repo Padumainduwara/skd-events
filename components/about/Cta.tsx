@@ -6,14 +6,8 @@ import { ArrowRight, Sparkles, PhoneCall, Mail } from "lucide-react";
 
 export default function Cta() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-12 bg-white relative overflow-hidden">
       
-      {/* ========================================================================
-          PERFORMANCE FIX: 
-          Moving the infinitely looping Blur Orbs from JS (Framer Motion) to 
-          Pure CSS Keyframes. Animating huge blurs in JS is the #1 cause of lag.
-          Using translate3d forces the GPU to render these smoothly.
-          ======================================================================== */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes pulse-orb1 {
           0%, 100% { transform: scale(1) translate3d(0,0,0); opacity: 0.3; }
@@ -33,12 +27,10 @@ export default function Cta() {
         }
       `}} />
 
-      {/* Background Subtle Elements for depth */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-100 via-white to-white z-0 transform-gpu" />
+       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-gray-100 via-white to-white z-0 transform-gpu" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        {/* The 2027 "Wow" CTA Card - Hardware Accelerated Scaling */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 30 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}

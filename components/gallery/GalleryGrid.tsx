@@ -28,7 +28,7 @@ export default function GalleryGrid() {
   );
 
   return (
-    <section className="py-20 md:py-32 bg-white relative z-10 min-h-screen">
+    <section className="py-12 md:py-12 bg-white relative z-10 min-h-screen">
       <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* ==============================================

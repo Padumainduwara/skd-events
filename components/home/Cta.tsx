@@ -6,7 +6,7 @@ import { ArrowRight, Sparkles, PhoneCall, Mail } from "lucide-react";
 
 export default function Cta() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden">
+    <section className="py-12 bg-white relative overflow-hidden">
       
       {/* ========================================================================
           PERFORMANCE FIX: 

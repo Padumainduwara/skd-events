@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  ClipboardCheck, CheckCircle2, Rows3, Camera, Video, Mic, LayoutTemplate, 
-  Music, Speaker, Printer, GraduationCap, Plus, Check, ShoppingBag, Send, ExternalLink, Trash2
+  ClipboardCheck, Rows3, Camera, Video, Mic, LayoutTemplate, 
+  Music, Speaker, Printer, GraduationCap, Plus, Check, ShoppingBag, Send, ExternalLink, Trash2, CheckCircle2
 } from "lucide-react";
 import WhatsAppModal from "./WhatsAppModal"; 
 
@@ -68,7 +68,18 @@ const structuredServices = [
   {
     id: "C5", category: "Master of Ceremony & Compere", icon: Mic,
     desc: "Professional announcers and comperes to guide the event smoothly in multiple languages.",
-    items: ["Sinhala Compere", "English Compere", "Tamil Compere"]
+    hideSelectAll: true, // Hides the Select All button for this category
+    items: ["Sinhala Compere", "English Compere", "Tamil Compere"],
+    nestedGroups: [
+      {
+        title: "Compere",
+        options: ["Male", "Female", "Male & Female"]
+      },
+      {
+        title: "Review Interview Host",
+        options: ["Male", "Female", "Male & Female"]
+      }
+    ]
   },
   {
     id: "C6", category: "Stage Arrangements", icon: LayoutTemplate,
@@ -99,6 +110,7 @@ const structuredServices = [
   {
     id: "C7", category: "Entertainment", icon: Music,
     desc: "Cultural, traditional, and modern entertainment acts to captivate your audience.",
+    hideSelectAll: true, // Hides the Select All button for this category
     items: ["Light Performance Dance", "Traditional Welcome Dance (Wes Dance)", "Sesath Holders", "Puja Dance (Girls)", "Comedian Act"],
     subCategories: [
       { name: "Girls' Dance Items", items: ["Solo Dance", "Latin Dance", "Belly Dance", "Indian Dance Act", "Mask Dance Act"] },
@@ -121,7 +133,7 @@ const structuredServices = [
   {
     id: "C10", category: "Graduation Items", icon: GraduationCap,
     desc: "Premium graduation cloaks, ceremonial gowns, and beautiful garlands for your special day.",
-    // Removed externalLink property as requested
+    hideSelectAll: true, // Hides the Select All button for this category
     subCategories: [
       { name: "Graduation Cloak", items: ["Black", "Ash", "Blue", "Maroon", "Red"] },
       { name: "Ceremonial Cloak", items: ["Red", "Blue", "Maroon"] },
@@ -155,7 +167,7 @@ export default function ServicesContent() {
     localStorage.removeItem("skd_services_cart");
   };
 
-  // --- NEW: Helper function to get ALL selectable strings for a given category ---
+  // Helper function to get ALL selectable strings for a given category
   const getAllItemsInCategory = (cat: any) => {
     let allItems: string[] = [];
     
@@ -163,6 +175,15 @@ export default function ServicesContent() {
     if (cat.items) {
       cat.items.forEach((item: string) => {
         allItems.push(`${cat.category}: ${item}`);
+      });
+    }
+
+    // Direct nested groups (e.g. Compere options)
+    if (cat.nestedGroups) {
+      cat.nestedGroups.forEach((nested: any) => {
+        nested.options.forEach((opt: string) => {
+          allItems.push(`${cat.category}: ${nested.title} - ${opt}`);
+        });
       });
     }
 
@@ -174,7 +195,7 @@ export default function ServicesContent() {
             allItems.push(`${cat.category} - ${sub.name}: ${item}`);
           });
         }
-        // Nested groups (e.g. Stage Decorations -> Fresh Flowers)
+        // Nested groups inside sub-categories
         if (sub.nestedGroups) {
           sub.nestedGroups.forEach((nested: any) => {
             nested.options.forEach((opt: string) => {
@@ -187,7 +208,7 @@ export default function ServicesContent() {
     return allItems;
   };
 
-  // --- NEW: Select/Deselect All Handler ---
+  // Select/Deselect All Handler
   const handleSelectAllCategory = (cat: any) => {
     const allItems = getAllItemsInCategory(cat);
     
@@ -235,7 +256,8 @@ export default function ServicesContent() {
 
   return (
     <>
-      <section className="pb-24 md:pb-40 py-16 bg-white relative">
+      {/* FIXED: Reduced pb-24 md:pb-40 to pb-12 md:pb-20 to reduce bottom spacing */}
+      <section className="pb-12 md:pb-20 pt-16 bg-white relative">
         <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
 
          <div className="columns-1 lg:columns-2 gap-6 lg:gap-8 space-y-6 lg:space-y-8">
@@ -269,32 +291,35 @@ export default function ServicesContent() {
                           <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 leading-tight">{cat.category}</h3>
                         </div>
                         
-                        {/* Select All / Deselect All Button */}
-                        <button 
-                          onClick={() => handleSelectAllCategory(cat)}
-                          className={`flex items-center self-start sm:self-auto gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors shrink-0 border ${
-                            areAllSelected 
-                              ? "bg-red-50 text-red-600 border-red-100 hover:bg-red-100" 
-                              : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100"
-                          }`}
-                        >
-                          {areAllSelected ? (
-                            <>
-                              <span>Deselect All</span>
-                              <Trash2 className="w-3.5 h-3.5" />
-                            </>
-                          ) : (
-                            <>
-                              <span>Select All</span>
-                              <CheckCircle2 className="w-3.5 h-3.5" />
-                            </>
-                          )}
-                        </button>
+                        {/* Show Select All button only if hideSelectAll is NOT true */}
+                        {!cat.hideSelectAll && (
+                          <button 
+                            onClick={() => handleSelectAllCategory(cat)}
+                            className={`flex items-center self-start sm:self-auto gap-2 px-4 py-2 rounded-full text-xs font-bold transition-colors shrink-0 border ${
+                              areAllSelected 
+                                ? "bg-red-50 text-red-600 border-red-100 hover:bg-red-100" 
+                                : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100"
+                            }`}
+                          >
+                            {areAllSelected ? (
+                              <>
+                                <span>Deselect All</span>
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </>
+                            ) : (
+                              <>
+                                <span>Select All</span>
+                                <CheckCircle2 className="w-3.5 h-3.5" />
+                              </>
+                            )}
+                          </button>
+                        )}
                       </div>
                       {cat.desc && <p className="text-sm sm:text-base text-gray-500 font-medium leading-relaxed">{cat.desc}</p>}
                     </div>
 
                     <div className="flex-grow space-y-6">
+                      
                       {/* Direct Items */}
                       {cat.items && cat.items.length > 0 && (
                         <div className="flex flex-wrap gap-2.5">
@@ -304,10 +329,34 @@ export default function ServicesContent() {
                         </div>
                       )}
 
+                      {/* NEW: Direct Nested Groups (e.g. for Master of Ceremony) */}
+                      {cat.nestedGroups && cat.nestedGroups.length > 0 && (
+                        <div className="mt-4 space-y-4">
+                          {cat.nestedGroups.map((nested: any) => (
+                            <div key={nested.title} className="bg-[#FAFAFA] border border-gray-200/60 p-4 sm:p-5 rounded-2xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.02)]">
+                              <div className="flex items-center gap-3 mb-4">
+                                <div className="w-1.5 h-4 bg-[#a40049] rounded-full shrink-0" />
+                                <h5 className="text-xs sm:text-sm font-extrabold text-gray-800 uppercase tracking-wide">
+                                  Select {nested.title}
+                                </h5>
+                              </div>
+                              <div className="flex flex-wrap gap-2.5">
+                                {nested.options.map((opt: string) => (
+                                  <SelectablePill 
+                                    key={opt} 
+                                    label={`${nested.title} - ${opt}`} 
+                                    categoryName={cat.category} 
+                                  />
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+
                       {/* Sub Categories */}
                       {cat.subCategories && (
                         <div className="space-y-4 mt-4">
-                          {/* TypeScript Fix: Added 'any' type to 'sub' to prevent Build Errors */}
                           {cat.subCategories.map((sub: any) => (
                             <div key={sub.name} className="bg-[#FAFAFA] border border-gray-200/60 p-4 sm:p-5 rounded-2xl">
                               <div className="flex items-center gap-3 mb-4">
@@ -327,7 +376,6 @@ export default function ServicesContent() {
                               {/* Nested Deep Sub-Categories */}
                               {sub.nestedGroups && sub.nestedGroups.length > 0 && (
                                 <div className="mt-4 space-y-3">
-                                  {/* TypeScript Fix: Added 'any' type to 'nested' to prevent Build Errors */}
                                   {sub.nestedGroups.map((nested: any) => (
                                     <div key={nested.title} className="bg-white border border-gray-100 p-3 sm:p-4 rounded-xl shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)]">
                                       <h5 className="text-[10px] sm:text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">

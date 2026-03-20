@@ -5,7 +5,7 @@ import { Map } from "lucide-react";
 
 export default function ContactMap() {
   return (
-    <section className="py-10 pb-24 md:pb-32 bg-white relative z-10">
+    <section className="py-10 pb-16 md:pb-12 bg-white relative z-10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Map Header */}
