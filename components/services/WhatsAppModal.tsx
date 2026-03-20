@@ -5,7 +5,6 @@ import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Send, ShoppingBag, CheckCircle2, Trash2 } from "lucide-react";
 
-// මේ තියෙන්නේ Types ටික (මේක අනිවාර්යයෙන්ම තියෙන්න ඕනෙ)
 interface WhatsAppModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -20,8 +19,8 @@ type MainCatGroup = { [mainCat: string]: SubCatGroup };
 
 export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clearCart }: WhatsAppModalProps) {
   const [mounted, setMounted] = useState(false);
+  const [showConfirmClear, setShowConfirmClear] = useState(false); 
 
-  // Form State
   const [formData, setFormData] = useState({
     companyName: "", address: "", email: "", contactPerson: "", 
     contactNumber: "", whatsappNumber: "", eventName: "", 
@@ -32,12 +31,12 @@ export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clear
     setMounted(true);
   }, []);
 
-  // BACKGROUND SCROLL LOCK
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      setShowConfirmClear(false);
     }
     return () => {
       document.body.style.overflow = "unset";
@@ -48,12 +47,11 @@ export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clear
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleClearCart = () => {
-    if(window.confirm("Are you sure you want to clear your entire package?")) {
-      clearCart(); 
-      localStorage.removeItem("skd_services_cart"); 
-      onClose(); 
-    }
+  // FIXED: No more JS window.confirm! Uses the Custom UI below.
+  const executeClearCart = () => {
+    clearCart(); 
+    setShowConfirmClear(false);
+    onClose(); 
   };
 
   const groupedCart = useMemo(() => {
@@ -102,7 +100,7 @@ export default function WhatsAppModal({ isOpen, onClose, cart, toggleCart, clear
 
 📋 *SELECTED EVENT PACKAGE:*${formattedCartText}
 
-🏢 *CUSTOMER DETAILS:*
+🏢 *Company DETAILS:*
 • *Company:* ${formData.companyName}
 • *Contact Person:* ${formData.contactPerson}
 • *Address:* ${formData.address}
@@ -145,7 +143,7 @@ Sent via SKD Event Management Website`;
             transition={{ type: "spring", stiffness: 300, damping: 25 }}
             className="relative w-full max-w-[1100px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] transform-gpu will-change-[transform,opacity]"
           >
-            {/* Header */}
+            {/* HEADER */}
             <div className="px-6 sm:px-10 py-5 sm:py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-20 shadow-sm shrink-0">
               <div>
                 <h3 className="text-xl sm:text-3xl font-extrabold text-gray-900">Request Quotation</h3>
@@ -156,11 +154,11 @@ Sent via SKD Event Management Website`;
               </button>
             </div>
 
-            {/* Scrollable Content */}
+            {/* BODY */}
             <div className="overflow-y-auto p-0 sm:p-2 scroll-smooth flex-grow bg-white">
               <div className="grid grid-cols-1 lg:grid-cols-12 min-h-full">
                 
-                {/* LEFT COLUMN: CART */}
+                {/* LEFT: CART */}
                 <div className="lg:col-span-5 order-1 bg-gray-50/50 p-6 sm:p-8 lg:p-10 border-b lg:border-b-0 lg:border-r border-gray-200 lg:border-gray-100">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div className="flex items-center gap-3">
@@ -176,7 +174,7 @@ Sent via SKD Event Management Website`;
                       </span>
                       {cart.length > 0 && (
                         <button 
-                          onClick={handleClearCart}
+                          onClick={() => setShowConfirmClear(true)} // FIXED: Opens custom UI confirm
                           className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 rounded-lg text-xs font-bold hover:bg-red-100 transition-colors whitespace-nowrap shrink-0"
                         >
                           <Trash2 className="w-3.5 h-3.5" /> Clear All
@@ -240,7 +238,7 @@ Sent via SKD Event Management Website`;
                     <div>
                       <h4 className="text-lg sm:text-xl font-extrabold text-gray-900 flex items-center gap-2.5 mb-2">
                         <span className="w-7 h-7 rounded-full bg-[#a40049] flex items-center justify-center text-xs font-bold text-white shadow-sm">1</span>
-                        Customer Details
+                        Company Details
                       </h4>
                       <p className="text-[11px] sm:text-xs text-gray-500 font-medium ml-10">We need this information to process your request.</p>
                       
@@ -323,6 +321,35 @@ Sent via SKD Event Management Website`;
                 </p>
               </div>
             </div>
+
+            {/* =========================================
+                CUSTOM CONFIRMATION UI (INSIDE MODAL)
+                ========================================= */}
+            <AnimatePresence>
+              {showConfirmClear && (
+                <div className="absolute inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-white/90 backdrop-blur-sm rounded-[2rem] sm:rounded-[2.5rem]">
+                  <motion.div 
+                    initial={{ scale: 0.9, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.9, y: 20 }}
+                    className="bg-white border border-gray-100 shadow-[0_20px_50px_-10px_rgba(0,0,0,0.1)] p-6 sm:p-8 rounded-3xl max-w-sm w-full text-center"
+                  >
+                    <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Trash2 className="w-8 h-8" />
+                    </div>
+                    <h4 className="text-xl font-extrabold text-gray-900 mb-2">Clear Entire Package?</h4>
+                    <p className="text-sm text-gray-500 mb-6 font-medium leading-relaxed">Are you sure you want to remove all selected services? This action cannot be undone.</p>
+                    <div className="flex gap-3">
+                      <button onClick={() => setShowConfirmClear(false)} className="flex-1 py-3 bg-gray-50 text-gray-700 font-bold rounded-xl hover:bg-gray-100 transition-colors">
+                        Cancel
+                      </button>
+                      <button onClick={executeClearCart} className="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors shadow-lg shadow-red-500/30">
+                        Yes, Clear All
+                      </button>
+                    </div>
+                  </motion.div>
+                </div>
+              )}
+            </AnimatePresence>
+
           </motion.div>
         </div>
       )}
