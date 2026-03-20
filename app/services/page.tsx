@@ -11,7 +11,7 @@ export const metadata = {
 
 export default function ServicesPage() {
   return (
-    <main className="min-h-screen bg-[#FAFAFA]">
+    <main className="min-h-screen bg-white">
       <ServicesHero />
       <ServicesContent />
       <SocialMedia />

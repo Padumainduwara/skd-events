@@ -1,54 +1,121 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
-  LayoutTemplate, Image as ImageIcon, AudioLines, Lightbulb, Rows3, ClipboardCheck, 
-  Users, GraduationCap, ScrollText, Camera, UserCheck, Sparkles, 
-  MonitorPlay, Coffee, ShieldCheck, Check, Plus, ShoppingBag, X, Send,
-  Rotate3d, Aperture, Frame, Palette, Printer, Share2, UserCog
+  ClipboardCheck, Rows3, Camera, Video, Mic, LayoutTemplate, 
+  Music, Speaker, Printer, GraduationCap, Plus, Check, ShoppingBag, Send, ExternalLink, Trash2
 } from "lucide-react";
+import WhatsAppModal from "./WhatsAppModal"; 
 
-// --- DATA FROM PDF WITH UPDATED CONTEXTUAL ICONS ---
-const mainServices = [
-  { id: "S1", title: "Stage Setup", desc: "A professionally designed stage with podium, backdrop, lighting, and seating for dignitaries to ensure a formal and elegant ceremony.", icon: LayoutTemplate },
-  { id: "S2", title: "Graduation Backdrop", desc: "A branded backdrop featuring the institution's name, logo, and convocation theme for official photographs.", icon: ImageIcon },
-  { id: "S3", title: "Sound System", desc: "Clear audio equipment including microphones, speakers, and mixers to ensure speeches and music are heard properly.", icon: AudioLines },
-  { id: "S4", title: "Lighting Setup", desc: "Focused stage lighting, ambient lights, and spotlights to enhance visibility and create a professional atmosphere.", icon: Lightbulb },
-  { id: "S5", title: "Seating Arrangement", desc: "Comfortable and organized seating for graduates, faculty, VIPs, and guests with proper numbering.", icon: Rows3 },
-  { id: "S6", title: "Registration Desk", desc: "A front desk for guest check-in, gown distribution, and verification of graduate details.", icon: ClipboardCheck },
-  { id: "S7", title: "Convocation Procession", desc: "Coordinated entry of graduates, academic staff, and dignitaries, led by ceremonial music.", icon: Users },
-  { id: "S8", title: "Academic Gowns & Hoods", desc: "Graduation gowns, hoods, and caps provided to students and staff according to the institutional colors.", icon: GraduationCap },
-  { id: "S9", title: "Certificates & Folders", desc: "Official certificates, secure folders, and name lists prepared for accurate distribution.", icon: ScrollText },
-  { id: "S10", title: "Photography & Videography", desc: "Professional photo and video coverage to capture stage moments, group photos, and event highlights.", icon: Camera },
-  { id: "S11", title: "Guest Management", desc: "Welcoming, seating guidance, ushering, and crowd flow management to maintain order.", icon: UserCheck },
-  { id: "S12", title: "Decor & Theming", desc: "Elegant décor, floral arrangements, banners, and thematic elements that reflect the institution's identity.", icon: Sparkles },
-  { id: "S13", title: "Multimedia & Screens", desc: "LED screens or projectors to display names, live video feed, presentations, or ceremonial content.", icon: MonitorPlay },
-  { id: "S14", title: "Refreshments Area", desc: "A designated space for guests and graduates to enjoy light snacks or beverages after the ceremony.", icon: Coffee },
-  { id: "S15", title: "Safety & Protocol", desc: "Security personnel, first-aid support, emergency exits, and adherence to formal protocol for dignitaries.", icon: ShieldCheck },
-];
-
-const photoboothServices = [
-  { id: "P1", title: "Standard Photobooth", desc: "Fully set-up photo station with backdrop, props, and instant printing for memorable keepsakes.", icon: Camera },
-  { id: "P2", title: "360 Video Booth", desc: "Rotating camera platform capturing slow-motion videos, offering a modern, interactive experience.", icon: Rotate3d },
-  { id: "P3", title: "DSLR Photobooth", desc: "Professional camera setup with lighting, backdrop, and on-site printing for high-quality photos.", icon: Aperture },
-  { id: "P4", title: "Mirror Photobooth", desc: "Stylish, interactive touch-screen mirror booth guiding guests through poses with animations.", icon: Frame },
-  { id: "P5", title: "Custom Backdrop & Props", desc: "Beautifully designed themed backdrops with matching props to suit the event style.", icon: Palette },
-  { id: "P6", title: "Instant Printing Station", desc: "Fast, high-quality photo prints with custom branding—perfect for giveaways.", icon: Printer },
-  { id: "P7", title: "Digital Sharing", desc: "Instantly receive photos/videos via QR code, email, or social media.", icon: Share2 },
-  { id: "P8", title: "Photobooth Attendant", desc: "Trained assistant to manage the booth, guide guests, and ensure smooth operation.", icon: UserCog },
+const structuredServices = [
+  {
+    id: "C1", category: "Registration", icon: ClipboardCheck,
+    desc: "A front desk for guest check-in, gown distribution, and verification of graduate details.",
+    items: [
+      "Student Seat Number Allocation", 
+      "Distribution of Student Cloaks & Garlands", 
+      "Distribution of Guest & Parent Entrance Passes", 
+      "Distribution of Refreshment Tokens"
+    ]
+  },
+  {
+    id: "C2", category: "Seating Arrangements", icon: Rows3,
+    desc: "Comfortable and organized seating for graduates, faculty, VIPs, and guests with proper numbering.",
+    items: [
+      "Student Procession (Perahara) Arrangement", 
+      "Award Receiving Arrangements & Time Management"
+    ],
+    subCategories: [
+      { 
+        name: "Auditorium", 
+        items: [
+          "Student Seating Arrangement", 
+          "Guest & Parent Seating Arrangement"
+        ] 
+      }
+    ]
+  },
+  {
+    id: "C3", category: "Event Photography", icon: Camera,
+    desc: "Professional photo coverage to capture stage moments, group photos, and event highlights.",
+    subCategories: [
+      { name: "Event Coverage", items: ["Fully Edited Highlight Photos", "Stage Photos"] },
+      { name: "Photobooth Coverage", items: ["Full & Bust Photos", "Family Photos", "Couple Photos", "Group Photos"] },
+      { name: "Photo Backdrops", items: ["Custom Themed Photo Backdrop"] }
+    ]
+  },
+  {
+    id: "C4", category: "Event Videography", icon: Video,
+    desc: "Professional video coverage, highlight videos, live streaming, and interactive 360 booths.",
+    items: [
+      "Fully Edited Event Coverage Video", "Fully Edited Highlight Video", 
+      "Fully Edited Guest Speeches", "Live Streaming on Facebook & YouTube", 
+      "Review & Testimonial Video Clips"
+    ],
+    subCategories: [
+      { 
+        name: "360 Video Booth", 
+        items: [
+          "04-Hour Package", 
+          "Full-Day Package", 
+          "7'x3' Matte Flex Print University & Campus Branding Boards"
+        ] 
+      }
+    ]
+  },
+  {
+    id: "C5", category: "Master of Ceremony & Compere", icon: Mic,
+    desc: "Professional announcers and comperes to guide the event smoothly in multiple languages.",
+    items: ["Sinhala Compere", "English Compere", "Tamil Compere"]
+  },
+  {
+    id: "C6", category: "Stage Arrangements", icon: LayoutTemplate,
+    desc: "A professionally designed stage with podium, backdrop, lighting, and floral decorations.",
+    subCategories: [
+      { name: "Stage Flower Decorations", items: ["Oil Lamp Decoration", "Podium Decoration", "Head Table Decoration", "Flower Garlands & Baskets"] },
+      { name: "LED Video Wall", items: ["55' LED TV on Stage", "Digital Podium", "Welcome Panel LED Video Wall"] }
+    ]
+  },
+  {
+    id: "C7", category: "Entertainment", icon: Music,
+    desc: "Cultural, traditional, and modern entertainment acts to captivate your audience.",
+    items: ["Traditional Welcome Dance (Wes Dance)", "Sesath Holders", "Puja Dance (Girls)", "Comedian Act"],
+    subCategories: [
+      { name: "Girls' Dance Items", items: ["Solo Dance", "Latin Dance", "Belly Dance", "Indian Dance Act", "Mask Dance Act"] },
+      { name: "Instrumental Items", items: ["Drum Orchestra", "Indian Doll Act with Dancers"] }
+    ]
+  },
+  {
+    id: "C8", category: "Sound & Lighting Systems", icon: Speaker,
+    desc: "Clear audio equipment and atmospheric stage lighting to enhance visibility and atmosphere.",
+    items: ["Professional Sound System Setup", "Dynamic Stage Lighting Setup"]
+  },
+  {
+    id: "C9", category: "Printing & Certificates", icon: Printer,
+    desc: "Official certificates, secure folders, flags, and promotional materials.",
+    items: ["Promo Flag Printing", "Promo Flag Poles"],
+    subCategories: [
+      { name: "Stage Flag Printing", items: ["University Flag", "Campus Flag", "Department Flag"] }
+    ]
+  },
+  {
+    id: "C10", category: "Graduation Items", icon: GraduationCap,
+    desc: "Premium graduation cloaks, ceremonial gowns, and beautiful garlands for your special day.",
+    externalLink: "https://skdcloaks.com/",
+    subCategories: [
+      { name: "Graduation Cloak", items: ["Black", "Ash", "Blue", "Maroon", "Red"] },
+      { name: "Ceremonial Cloak", items: ["Red", "Blue", "Maroon"] },
+      { name: "Garlands", items: ["Purple", "Red", "Yellow", "Pink"] }
+    ]
+  }
 ];
 
 export default function ServicesContent() {
   const [cart, setCart] = useState<string[]>([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showDockConfirm, setShowDockConfirm] = useState(false); 
 
-  // Form State
-  const [formData, setFormData] = useState({
-    companyName: "", address: "", email: "", contactPerson: "", contactNumber: "", whatsappNumber: "", eventName: "", eventDate: "", eventLocation: "", guestCount: ""
-  });
-
-  // Load Cart from LocalStorage on mount
   useEffect(() => {
     const savedCart = localStorage.getItem("skd_services_cart");
     if (savedCart) {
@@ -56,264 +123,204 @@ export default function ServicesContent() {
     }
   }, []);
 
-  // Save Cart to LocalStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("skd_services_cart", JSON.stringify(cart));
   }, [cart]);
 
-  const toggleCart = (title: string) => {
-    setCart(prev => prev.includes(title) ? prev.filter(item => item !== title) : [...prev, title]);
+  const toggleCart = (itemFullString: string) => {
+    setCart(prev => prev.includes(itemFullString) ? prev.filter(i => i !== itemFullString) : [...prev, itemFullString]);
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const clearCart = () => {
+    setCart([]);
+    localStorage.removeItem("skd_services_cart");
+    setShowDockConfirm(false);
   };
 
-  // WhatsApp Submission Handler - formatted beautifully for easy reading
-  const handleWhatsAppSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (cart.length === 0) {
-      alert("Please select at least one service before requesting a quotation.");
-      return;
-    }
-
-    const text = `🌟 *NEW QUOTATION REQUEST* 🌟
-
-📋 *SELECTED SERVICES:*
-${cart.map((s, i) => `${i + 1}. ${s}`).join('\n')}
-
-🏢 *CUSTOMER DETAILS:*
-• *Company:* ${formData.companyName}
-• *Contact Person:* ${formData.contactPerson}
-• *Address:* ${formData.address}
-
-📞 *CONTACT INFO:*
-• *Email:* ${formData.email}
-• *Phone:* ${formData.contactNumber}
-• *WhatsApp:* ${formData.whatsappNumber || 'N/A'}
-
-🎉 *EVENT DETAILS:*
-• *Event Name:* ${formData.eventName}
-• *Date:* ${formData.eventDate}
-• *Location:* ${formData.eventLocation}
-• *Expected Guests:* ${formData.guestCount}
-
-─────────────────────
-Sent via SKD Event Management Website`;
+  const SelectablePill = ({ label, categoryName }: { label: string, categoryName: string }) => {
+    const fullString = `${categoryName}: ${label}`;
+    const isSelected = cart.includes(fullString);
     
-    const encodedText = encodeURIComponent(text);
-    // Sri Lanka Phone Number
-    window.open(`https://wa.me/94718869555?text=${encodedText}`, '_blank');
-    setIsModalOpen(false);
+    return (
+      <motion.button
+        whileTap={{ scale: 0.95 }}
+        onClick={() => toggleCart(fullString)}
+        className={`flex items-start sm:items-center gap-2.5 px-4 sm:px-5 py-2.5 rounded-xl sm:rounded-full text-xs sm:text-sm font-bold transition-all duration-300 border transform-gpu text-left w-full sm:w-auto h-auto ${
+          isSelected 
+            ? "bg-[#a40049] text-white border-[#a40049] shadow-md" 
+            : "bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100 hover:border-gray-300"
+        }`}
+      >
+        <div className="shrink-0 mt-0.5 sm:mt-0">
+          {isSelected ? <Check className="w-4 h-4 text-white" /> : <Plus className="w-4 h-4 text-gray-400" />}
+        </div>
+        <span className="leading-snug break-words">{label}</span>
+      </motion.button>
+    );
   };
 
   return (
-    <section className="pb-24 md:pb-40 py-8 bg-white relative">
-      <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8">
-        
-        {/* =========================================
-            SECTION 1: MAIN CONVOCATION SERVICES
-            ========================================= */}
-        <div className="mb-16">
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-8 border-l-4 border-[#a40049] pl-4">Core Event Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {mainServices.map((service) => {
-              const isSelected = cart.includes(service.title);
-              const Icon = service.icon;
+    <>
+      <section className="pb-24 md:pb-40 py-16 bg-white relative">
+        <div className="max-w-[90rem] mx-auto px-4 sm:px-6 lg:px-8">
+
+         <div className="columns-1 lg:columns-2 gap-6 lg:gap-8 space-y-6 lg:space-y-8">
+            {structuredServices.map((cat, index) => {
+              const Icon = cat.icon;
               return (
-                <div key={service.id} className={`relative p-6 rounded-3xl border transition-all duration-300 transform-gpu ${isSelected ? 'bg-[#a40049]/5 border-[#a40049]/40 shadow-md scale-[1.02]' : 'bg-white border-gray-200 hover:shadow-lg hover:-translate-y-1'}`}>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className={`w-12 h-12 rounded-2xl flex items-center justify-center transition-colors ${isSelected ? 'bg-[#a40049] text-white' : 'bg-gray-100 text-[#a40049]'}`}>
-                      <Icon className="w-6 h-6" />
-                    </div>
-                    <button onClick={() => toggleCart(service.title)} className={`flex items-center justify-center w-8 h-8 rounded-full transition-all ${isSelected ? 'bg-[#a40049] text-white' : 'bg-gray-100 text-gray-400 hover:bg-gray-200 hover:text-gray-900'}`}>
-                      {isSelected ? <Check className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
-                    </button>
-                  </div>
-                  <h3 className={`text-xl font-bold mb-2 transition-colors ${isSelected ? 'text-[#a40049]' : 'text-gray-900'}`}>{service.title}</h3>
-                  <p className="text-sm text-gray-600 font-medium leading-relaxed">{service.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* =========================================
-            SECTION 2: PREMIUM PHOTOBOOTH
-            ========================================= */}
-        <div>
-          <h2 className="text-3xl font-extrabold text-gray-900 mb-2 border-l-4 border-[#4d002c] pl-4">Premium Photobooth & Media</h2>
-          <p className="text-gray-600 mb-8 font-medium pl-5">Decades of professional service, fully managed by our expert photography team.</p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {photoboothServices.map((service) => {
-              const isSelected = cart.includes(service.title);
-              const Icon = service.icon;
-              return (
-                <div key={service.id} className={`relative p-5 rounded-2xl border transition-all duration-300 transform-gpu flex flex-col ${isSelected ? 'bg-[#4d002c]/5 border-[#4d002c]/40 shadow-md' : 'bg-white border-gray-200 hover:shadow-md hover:-translate-y-1'}`}>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors shrink-0 ${isSelected ? 'bg-[#4d002c] text-white' : 'bg-gray-100 text-[#4d002c]'}`}>
-                      <Icon className="w-5 h-5" />
-                    </div>
-                    <h3 className={`text-sm font-bold leading-tight ${isSelected ? 'text-[#4d002c]' : 'text-gray-900'}`}>{service.title}</h3>
-                  </div>
-                  <p className="text-xs text-gray-600 font-medium leading-relaxed mb-4 flex-grow">{service.desc}</p>
-                  
-                  <button onClick={() => toggleCart(service.title)} className={`w-full py-2 rounded-xl text-sm font-bold transition-all flex items-center justify-center gap-2 ${isSelected ? 'bg-[#4d002c] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-                    {isSelected ? <><Check className="w-4 h-4"/> Added</> : <><Plus className="w-4 h-4"/> Add to Quote</>}
-                  </button>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-
-      </div>
-
-      {/* =========================================
-          DYNAMIC ISLAND / FLOATING GLASS DOCK
-          ========================================= */}
-      <AnimatePresence>
-        {cart.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0, y: 100 }} 
-            animate={{ opacity: 1, y: 0 }} 
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="fixed bottom-6 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl z-50 transform-gpu"
-          >
-            <div className="bg-white/80 backdrop-blur-xl border border-gray-200/50 shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-full p-2 sm:p-3 flex items-center justify-between gap-4">
-              
-              <div className="flex items-center gap-3 pl-2 sm:pl-4">
-                <div className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-[#a40049]/10 rounded-full">
-                  <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6 text-[#a40049]" />
-                  <motion.span 
-                    key={cart.length}
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff4d94] text-white text-xs font-bold flex items-center justify-center rounded-full shadow-sm"
-                  >
-                    {cart.length}
-                  </motion.span>
-                </div>
-                <div className="hidden sm:block">
-                  <p className="text-sm font-extrabold text-gray-900 leading-none">Services Added</p>
-                  <p className="text-xs text-gray-500 font-medium mt-1">Ready for quotation</p>
-                </div>
-              </div>
-
-              <button 
-                onClick={() => setIsModalOpen(true)} 
-                className="flex-shrink-0 px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-all hover:scale-[1.02] flex items-center gap-2 text-sm sm:text-base transform-gpu"
-              >
-                Review Quote
-                <Send className="w-4 h-4" />
-              </button>
-
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* =========================================
-          MODERN WHATSAPP QUOTATION MODAL
-          ========================================= */}
-      <AnimatePresence>
-        {isModalOpen && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6">
-            <motion.div 
-              initial={{ opacity: 0 }} 
-              animate={{ opacity: 1 }} 
-              exit={{ opacity: 0 }} 
-              onClick={() => setIsModalOpen(false)} 
-              className="absolute inset-0 bg-black/40 backdrop-blur-sm" 
-            />
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-              animate={{ opacity: 1, scale: 1, y: 0 }} 
-              exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-4xl bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] transform-gpu will-change-[transform,opacity]"
-            >
-              {/* Header */}
-              <div className="px-6 sm:px-10 py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-20">
-                <div>
-                  <h3 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Request Quotation</h3>
-                  <p className="text-sm text-gray-500 font-medium mt-1">Please fill in your details to proceed</p>
-                </div>
-                <button onClick={() => setIsModalOpen(false)} className="p-3 bg-gray-50 hover:bg-red-50 hover:text-red-500 rounded-full transition-colors group">
-                  <X className="w-6 h-6 text-gray-500 group-hover:text-red-500" />
-                </button>
-              </div>
-
-              {/* Scrollable Form Content */}
-              <div className="overflow-y-auto p-6 sm:p-10 scroll-smooth bg-gray-50/50">
-                
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                  {/* Left Side: Selected Items */}
-                  <div className="lg:col-span-1">
-                    <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-sm sticky top-0">
-                      <h4 className="text-sm font-extrabold text-gray-900 uppercase tracking-wider mb-4 flex items-center gap-2">
-                        <ShoppingBag className="w-4 h-4 text-[#a40049]" /> Your List ({cart.length})
-                      </h4>
-                      <div className="space-y-3 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
-                        {cart.map(item => (
-                          <div key={item} className="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-100">
-                            <span className="text-xs sm:text-sm font-bold text-gray-700">{item}</span>
-                            <button onClick={() => toggleCart(item)} className="text-gray-400 hover:text-red-500 transition-colors">
-                              <X className="w-4 h-4" />
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Side: The Form */}
-                  <div className="lg:col-span-2">
-                    <form id="whatsappForm" onSubmit={handleWhatsAppSubmit} className="space-y-6 bg-white p-6 sm:p-8 rounded-3xl border border-gray-100 shadow-sm">
-                      
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Company Name *</label><input required type="text" name="companyName" value={formData.companyName} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Contact Person *</label><input required type="text" name="contactPerson" value={formData.contactPerson} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2 sm:col-span-2"><label className="text-xs font-bold text-gray-600 ml-1">Company Address *</label><input required type="text" name="address" value={formData.address} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Email Address *</label><input required type="email" name="email" value={formData.email} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Contact Number *</label><input required type="tel" name="contactNumber" value={formData.contactNumber} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">WhatsApp Number</label><input type="tel" name="whatsappNumber" value={formData.whatsappNumber} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Event Name *</label><input required type="text" name="eventName" value={formData.eventName} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Event Date *</label><input required type="date" name="eventDate" value={formData.eventDate} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Event Location *</label><input required type="text" name="eventLocation" value={formData.eventLocation} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                        <div className="space-y-2"><label className="text-xs font-bold text-gray-600 ml-1">Guest / Student Count *</label><input required type="number" name="guestCount" value={formData.guestCount} onChange={handleInputChange} className="w-full px-5 py-3.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm focus:ring-2 focus:ring-[#a40049]/30 focus:border-[#a40049] outline-none transition-all"/></div>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Footer Action */}
-              <div className="px-6 sm:px-10 py-6 border-t border-gray-100 bg-white">
-                <button 
-                  type="submit" 
-                  form="whatsappForm" 
-                  disabled={cart.length === 0}
-                  className={`w-full py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all transform transform-gpu ${
-                    cart.length > 0 
-                      ? "bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white hover:shadow-lg hover:shadow-green-500/30 hover:-translate-y-0.5" 
-                      : "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  }`}
+                <motion.div 
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  key={cat.id} 
+                  className="relative group rounded-[2rem] sm:rounded-[2.5rem] p-[2px] transition-all duration-500 hover:-translate-y-2 transform-gpu shadow-md hover:shadow-[0_20px_40px_-15px_rgba(164,0,73,0.3)] break-inside-avoid inline-block w-full"
                 >
-                  <Send className="w-5 h-5" />
-                  Send Request via WhatsApp
-                </button>
-                <p className="text-xs text-center text-gray-400 mt-4 font-medium">
-                  Your WhatsApp application will open with the pre-filled quotation request.
-                </p>
+                  <div className="absolute inset-0 rounded-[2rem] sm:rounded-[2.5rem] bg-gradient-to-br from-gray-200 to-gray-100 group-hover:from-[#ff4d94] group-hover:to-[#a40049] transition-colors duration-500" />
+                  
+                  <div className="relative bg-white rounded-[1.9rem] sm:rounded-[2.4rem] px-6 py-8 sm:p-8 md:p-10 flex flex-col h-full">
+                    <div className="mb-6 sm:mb-8">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                        <div className="flex items-center gap-3 sm:gap-4">
+                          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#a40049]/10 to-[#ff4d94]/5 border border-[#a40049]/10 flex items-center justify-center flex-shrink-0">
+                            <Icon className="w-6 h-6 sm:w-7 sm:h-7 text-[#a40049]" />
+                          </div>
+                          <h3 className="text-xl sm:text-2xl font-extrabold text-gray-900 leading-tight">{cat.category}</h3>
+                        </div>
+                        
+                        {cat.externalLink && (
+                          <a 
+                            href={cat.externalLink} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center self-start sm:self-auto gap-2 px-4 py-2 bg-gray-900 text-white rounded-full text-xs font-bold hover:bg-[#a40049] transition-colors shrink-0"
+                          >
+                            <span>Visit Store</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                      </div>
+                      {cat.desc && <p className="text-sm sm:text-base text-gray-500 font-medium leading-relaxed">{cat.desc}</p>}
+                    </div>
+
+                    <div className="flex-grow space-y-6">
+                      {cat.items && (
+                        <div className="flex flex-wrap gap-2.5">
+                          {cat.items.map(item => (
+                            <SelectablePill key={item} label={item} categoryName={cat.category} />
+                          ))}
+                        </div>
+                      )}
+
+                      {cat.subCategories && (
+                        <div className="space-y-4 mt-4">
+                          {cat.subCategories.map(sub => (
+                            <div key={sub.name} className="bg-[#FAFAFA] border border-gray-200/60 p-4 sm:p-5 rounded-2xl">
+                              <div className="flex items-center gap-3 mb-4">
+                                <div className="w-1.5 h-4 bg-[#a40049] rounded-full shrink-0" />
+                                <h4 className="text-xs sm:text-sm font-extrabold text-gray-800 uppercase tracking-wide">{sub.name}</h4>
+                              </div>
+                              <div className="flex flex-wrap gap-2.5">
+                                {sub.items.map(item => (
+                                  <SelectablePill key={item} label={item} categoryName={`${cat.category} - ${sub.name}`} />
+                                ))}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {cart.length > 0 && (
+            <motion.div 
+              initial={{ opacity: 0, y: 100 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              exit={{ opacity: 0, y: 100 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="fixed bottom-6 left-4 right-4 md:left-1/2 md:-translate-x-1/2 md:w-full md:max-w-2xl z-40 transform-gpu"
+            >
+              <div className="bg-white/90 backdrop-blur-xl border border-gray-200/50 shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-full p-2 sm:p-3 flex items-center justify-between gap-4">
+                
+                <div className="flex items-center gap-3 pl-2 sm:pl-4 overflow-hidden">
+                  <div className="relative flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-[#a40049]/10 rounded-full shrink-0">
+                    <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6 text-[#a40049]" />
+                  </div>
+                  <div className="hidden sm:block">
+                    <p className="text-sm font-extrabold text-gray-900 leading-none">Services Added</p>
+                    <p className="text-xs text-gray-500 font-medium mt-1">Ready for quotation</p>
+                  </div>
+                  <div className="sm:hidden px-3 py-1.5 bg-white border border-gray-200 text-[#a40049] text-xs font-extrabold rounded-full shadow-sm whitespace-nowrap shrink-0">
+                    {cart.length} Items
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <button 
+                    onClick={() => setShowDockConfirm(true)} 
+                    className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-colors hidden sm:block shrink-0"
+                    title="Clear All"
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+
+                  <motion.button 
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setIsModalOpen(true)} 
+                    className="flex-shrink-0 px-5 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-full font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2 text-sm sm:text-base transform-gpu whitespace-nowrap"
+                  >
+                    Review Quote
+                    <Send className="w-4 h-4 shrink-0" />
+                  </motion.button>
+                </div>
               </div>
             </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+          )}
+        </AnimatePresence>
 
-    </section>
+        <AnimatePresence>
+          {showDockConfirm && (
+            <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 sm:p-6">
+              <motion.div 
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+                onClick={() => setShowDockConfirm(false)} 
+                className="absolute inset-0 bg-black/40 backdrop-blur-sm" 
+              />
+              <motion.div 
+                initial={{ opacity: 0, scale: 0.9, y: 20 }} 
+                animate={{ opacity: 1, scale: 1, y: 0 }} 
+                exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                className="relative bg-white rounded-3xl shadow-2xl p-6 sm:p-8 max-w-sm w-full text-center z-10"
+              >
+                <div className="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Trash2 className="w-8 h-8" />
+                </div>
+                <h4 className="text-xl font-extrabold text-gray-900 mb-2">Clear Package?</h4>
+                <p className="text-sm text-gray-500 mb-6 font-medium">Are you sure you want to remove all selected items? This action cannot be undone.</p>
+                <div className="flex gap-3">
+                  <button onClick={() => setShowDockConfirm(false)} className="flex-1 py-3 bg-gray-100 text-gray-700 font-bold rounded-xl hover:bg-gray-200 transition-colors">Cancel</button>
+                  <button onClick={clearCart} className="flex-1 py-3 bg-red-500 text-white font-bold rounded-xl hover:bg-red-600 transition-colors shadow-lg shadow-red-500/30">Yes, Clear</button>
+                </div>
+              </motion.div>
+            </div>
+          )}
+        </AnimatePresence>
+
+      </section>
+
+      <WhatsAppModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        cart={cart}
+        toggleCart={toggleCart}
+        clearCart={clearCart} 
+      />
+    </>
   );
 }
