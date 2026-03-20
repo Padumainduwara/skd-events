@@ -168,7 +168,7 @@ export default function Navbar() {
                   <p className="text-gray-500 text-xs sm:text-sm mb-5">Let us craft an unforgettable experience.</p>
                   <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
                     <button className="w-full py-4 bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white rounded-xl font-bold shadow-lg shadow-[#a40049]/20 flex items-center justify-center gap-2 text-sm sm:text-base transform-gpu">
-                      Get a Quote
+                      Contact Us
                     </button>
                   </Link>
                 </div>
