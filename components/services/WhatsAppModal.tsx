@@ -241,7 +241,7 @@ Sent via SKD Event Management Website`;
   const modalContent = (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 flex items-center justify-center p-4 sm:p-6" style={{ zIndex: 999999 }}>
+        <div className="fixed inset-0 flex items-center justify-center p-6 sm:p-8 md:p-12" style={{ zIndex: 999999 }}>
           <motion.div 
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
             onClick={onClose} 
@@ -249,12 +249,12 @@ Sent via SKD Event Management Website`;
           />
           
           <motion.div 
-            initial={{ opacity: 0, scale: 0.95, y: 20 }} 
-            animate={{ opacity: 1, scale: 1, y: 0 }} 
-            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="relative w-full max-w-[1150px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[95vh] transform-gpu will-change-[transform,opacity]"
-          >
+  initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+  animate={{ opacity: 1, scale: 1, y: 0 }} 
+  exit={{ opacity: 0, scale: 0.95, y: 20 }}
+  transition={{ type: "spring", stiffness: 300, damping: 25 }}
+  className="relative w-full max-w-[1150px] bg-white rounded-[2rem] sm:rounded-[2.5rem] shadow-2xl overflow-hidden flex flex-col max-h-[85vh] md:max-h-[90vh] transform-gpu will-change-[transform,opacity]"
+>
             {/* HEADER */}
             <div className="px-6 sm:px-10 py-5 sm:py-6 border-b border-gray-100 flex items-center justify-between bg-white sticky top-0 z-20 shadow-sm shrink-0">
               <div>
@@ -463,43 +463,44 @@ Sent via SKD Event Management Website`;
             </div>
 
             {/* FOOTER (DUAL SUBMIT BUTTONS) */}
-            <div className="px-6 sm:px-10 py-5 sm:py-6 border-t border-gray-100 bg-white shrink-0">
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 max-w-2xl mx-auto">
-                
-                {/* WHATSAPP BUTTON */}
-                <motion.button 
-                  whileTap={{ scale: 0.98 }}
-                  type="button" 
-                  onClick={() => handleSubmitAction('whatsapp')}
-                  disabled={cart.length === 0}
-                  className={`w-full sm:flex-1 py-4 rounded-xl sm:rounded-2xl font-extrabold flex items-center justify-center gap-2.5 transition-all transform-gpu ${
-                    cart.length > 0 
-                      ? "bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white shadow-[0_10px_30px_-10px_rgba(37,211,102,0.5)] hover:shadow-[0_15px_40px_-10px_rgba(37,211,102,0.6)] hover:-translate-y-1" 
-                      : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  }`}
-                >
-                  <Send className="w-5 h-5 shrink-0" />
-                  <span className="text-sm sm:text-base tracking-wide">Send via WhatsApp</span>
-                </motion.button>
+            <div className="px-6 sm:px-10 py-4 sm:py-5 border-t border-gray-100 bg-white shrink-0">
+  {/* max-w-lg දාලා බටන් දෙකේ උපරිම පළල පොඩි කළා */}
+  <div className="flex flex-col sm:flex-row items-center justify-center gap-3 max-w-lg mx-auto">
+    
+    {/* WHATSAPP BUTTON (py-3 දාලා උස අඩු කළා, rounded-xl දැම්මා) */}
+    <motion.button 
+      whileTap={{ scale: 0.98 }}
+      type="button" 
+      onClick={() => handleSubmitAction('whatsapp')}
+      disabled={cart.length === 0}
+      className={`w-full sm:flex-1 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all transform-gpu ${
+        cart.length > 0 
+          ? "bg-gradient-to-r from-[#25D366] to-[#128C7E] text-white shadow-[0_5px_20px_-5px_rgba(37,211,102,0.4)] hover:shadow-[0_8px_25px_-5px_rgba(37,211,102,0.5)] hover:-translate-y-0.5" 
+          : "bg-gray-100 text-gray-400 cursor-not-allowed"
+      }`}
+    >
+      <Send className="w-4 h-4 shrink-0" />
+      <span className="text-sm tracking-wide">Send via WhatsApp</span>
+    </motion.button>
 
-                {/* EMAIL BUTTON */}
-                <motion.button 
-                  whileTap={{ scale: 0.98 }}
-                  type="button" 
-                  onClick={() => handleSubmitAction('email')}
-                  disabled={cart.length === 0}
-                  className={`w-full sm:flex-1 py-4 rounded-xl sm:rounded-2xl font-extrabold flex items-center justify-center gap-2.5 transition-all transform-gpu ${
-                    cart.length > 0 
-                      ? "bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white shadow-[0_10px_30px_-10px_rgba(164,0,73,0.5)] hover:shadow-[0_15px_40px_-10px_rgba(164,0,73,0.6)] hover:-translate-y-1" 
-                      : "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  }`}
-                >
-                  <Mail className="w-5 h-5 shrink-0" />
-                  <span className="text-sm sm:text-base tracking-wide">Send via Email</span>
-                </motion.button>
-                
-              </div>
-            </div>
+    {/* EMAIL BUTTON (py-3 දාලා උස අඩු කළා, rounded-xl දැම්මා) */}
+    <motion.button 
+      whileTap={{ scale: 0.98 }}
+      type="button" 
+      onClick={() => handleSubmitAction('email')}
+      disabled={cart.length === 0}
+      className={`w-full sm:flex-1 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all transform-gpu ${
+        cart.length > 0 
+          ? "bg-gradient-to-r from-[#a40049] to-[#4d002c] text-white shadow-[0_5px_20px_-5px_rgba(164,0,73,0.4)] hover:shadow-[0_8px_25px_-5px_rgba(164,0,73,0.5)] hover:-translate-y-0.5" 
+          : "bg-gray-100 text-gray-400 cursor-not-allowed"
+      }`}
+    >
+      <Mail className="w-4 h-4 shrink-0" />
+      <span className="text-sm tracking-wide">Send via Email</span>
+    </motion.button>
+    
+  </div>
+</div>
 
             {/* CUSTOM CONFIRMATION UI (INSIDE MODAL) */}
             <AnimatePresence>

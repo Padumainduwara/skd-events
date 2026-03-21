@@ -35,11 +35,11 @@ export default function AboutHero() {
               Meets <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a40049] to-[#ff4d94]">Precision.</span>
             </h1>
             
-            <p className="text-gray-600 text-lg sm:text-xl md:text-2xl leading-relaxed font-medium mb-4 max-w-2xl">
+            <p className="text-gray-600 text-lg sm:text-xl md:text-xl leading-relaxed font-medium mb-4 max-w-2xl">
               We are a full-service event planning and production company dedicated to transforming your ideas into extraordinary experiences.
             </p>
 
-            <p className="text-[#a40049] text-xl font-bold tracking-wide italic mb-8">
+            <p className="text-[#a40049] text-lg font-bold tracking-wide italic mb-8">
               Your Event. Our Expertise. Simply Unforgettable.
             </p>
 
