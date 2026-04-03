@@ -59,15 +59,15 @@ const galleryData = [
   { id: "award-6", src: "/gallery/seating/award/6.jpg", category: "Seating Arrangements", subCategory: "Award Receiving", title: "Award Receiving Management" },
 
   // Procession
-  { id: "proc-1", src: "/gallery/seating/Procession/1.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-2", src: "/gallery/seating/Procession/2.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-3", src: "/gallery/seating/Procession/3.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-4", src: "/gallery/seating/Procession/4.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-6", src: "/gallery/seating/Procession/6.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-7", src: "/gallery/seating/Procession/7.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-8", src: "/gallery/seating/Procession/8.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-9", src: "/gallery/seating/Procession/9.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
-  { id: "proc-10", src: "/gallery/seating/Procession/10.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-1", src: "/gallery/seating/procession/1.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-2", src: "/gallery/seating/procession/2.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-3", src: "/gallery/seating/procession/3.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-4", src: "/gallery/seating/procession/4.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-6", src: "/gallery/seating/procession/6.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-7", src: "/gallery/seating/procession/7.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-8", src: "/gallery/seating/procession/8.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-9", src: "/gallery/seating/procession/9.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-10", src: "/gallery/seating/procession/10.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
 
   // Other Placeholders for testing
   { id: "photo-1", src: "/gallery/photography/1.jpg", category: "Event Photography", title: "Graduation Group Photo" },
