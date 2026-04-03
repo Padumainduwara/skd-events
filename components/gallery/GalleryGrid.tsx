@@ -17,7 +17,7 @@ const categoriesConfig = [
   { name: "Master of Ceremony & Compere" },
   { 
     name: "Stage Arrangements",
-    subCategories: ["Stage Flower Decorations", "LED Video Wall", "Oil Lamps Decorations", "Podium Decorations", "Welcome Wall", "55_ LED TV", "Head Table Decorations", "Flower Garlands & Baskets"] 
+    subCategories: ["Stage Flower Decorations", "LED Video Wall", "Oil Lamps Decorations", "Podium Decorations", "Digital Podium", "Welcome Wall", "55_ LED TV", "Head Table Decorations", "Flower Garlands & Baskets"] 
   },
   { name: "Entertainment" },
   { name: "Sound & Lighting Systems" },
@@ -89,8 +89,9 @@ const galleryData = [
   { id: "stg-pod-2", src: "/gallery/stage/podium/2.jpg", category: "Stage Arrangements", subCategory: "Podium Decorations", title: "Podiums Decorations" },
   { id: "stg-pod-3", src: "/gallery/stage/podium/3.jpg", category: "Stage Arrangements", subCategory: "Podium Decorations", title: "Podiums Decorations" },
   { id: "stg-pod-4", src: "/gallery/stage/podium/4.jpg", category: "Stage Arrangements", subCategory: "Podium Decorations", title: "Podiums Decorations" },
-  { id: "stg-pod-5", src: "/gallery/stage/podium/5.jpg", category: "Stage Arrangements", subCategory: "Podium Decorations", title: "Podiums Decorations" },
-  { id: "stg-pod-6", src: "/gallery/stage/podium/6.jpg", category: "Stage Arrangements", subCategory: "Podium Decorations", title: "Podiums Decorations" },
+  
+  { id: "stg-digipod-1", src: "/gallery/stage/digipodium/1.jpg", category: "Stage Arrangements", subCategory: "Digital Podium", title: "Digital Podium" },
+  { id: "stg-digipod-2", src: "/gallery/stage/digipodium/2.jpg", category: "Stage Arrangements", subCategory: "Digital Podium", title: "Digital Podium" },
 
   { id: "stg-wel-1", src: "/gallery/stage/welcome/1.jpg", category: "Stage Arrangements", subCategory: "Welcome Wall", title: "Welcome Signage" },
   { id: "stg-wel-2", src: "/gallery/stage/welcome/2.jpg", category: "Stage Arrangements", subCategory: "Welcome Wall", title: "Welcome Signage" },
@@ -448,7 +449,7 @@ export default function GalleryGrid() {
           </div>
 
           {/* --- PERFORMANCE OPTIMIZED GRID --- */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[50vh]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((item, index) => (
                 <motion.div
