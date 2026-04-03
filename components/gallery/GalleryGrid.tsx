@@ -28,7 +28,6 @@ const categoriesConfig = [
 // --- GALLERY DATA (Perfect Squares Only) ---
 // PERFORMANCE FIX: Strict unique IDs & Fixed Case-Sensitive Paths for Vercel
 const galleryData = [
-  const galleryData = [
   { id: "reg-1", src: "/gallery/registration/1.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-2", src: "/gallery/registration/2.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-3", src: "/gallery/registration/3.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
