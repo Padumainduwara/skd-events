@@ -25,8 +25,6 @@ const categoriesConfig = [
   { name: "Graduation Items" }
 ];
 
-// --- GALLERY DATA (Perfect Squares Only) ---
-// PERFORMANCE FIX: Strict unique IDs & Fixed Case-Sensitive Paths for Vercel
 const galleryData = [
   { id: "reg-1", src: "/gallery/registration/1.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-2", src: "/gallery/registration/2.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
@@ -58,7 +56,7 @@ const galleryData = [
   { id: "award-5", src: "/gallery/seating/award/5.jpg", category: "Seating Arrangements", subCategory: "Award Receiving", title: "Award Receiving Management" },
   { id: "award-6", src: "/gallery/seating/award/6.jpg", category: "Seating Arrangements", subCategory: "Award Receiving", title: "Award Receiving Management" },
 
-  // Procession - FIXED: Capital 'P' changed to simple 'p' to match Vercel/Linux folder structure
+  // Procession 
   { id: "proc-1", src: "/gallery/seating/procession/1.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
   { id: "proc-2", src: "/gallery/seating/procession/2.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
   { id: "proc-3", src: "/gallery/seating/procession/3.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
@@ -109,7 +107,6 @@ const galleryData = [
   { id: "stg-hd-1", src: "/gallery/stage/headtabledeco/1.jpg", category: "Stage Arrangements", subCategory: "Head Table Decorations", title: "Head Table Decorations" },
   { id: "stg-hd-2", src: "/gallery/stage/headtabledeco/2.jpg", category: "Stage Arrangements", subCategory: "Head Table Decorations", title: "Head Table Decorations" },
 
-  // Garlands - FIXED: 'garlends' typo changed to 'garlands' to match the actual folder name
   { id: "stg-gar-1", src: "/gallery/stage/garlands/1.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
   { id: "stg-gar-2", src: "/gallery/stage/garlands/2.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
   { id: "stg-gar-3", src: "/gallery/stage/garlands/3.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
