@@ -26,8 +26,9 @@ const categoriesConfig = [
 ];
 
 // --- GALLERY DATA (Perfect Squares Only) ---
-// PERFORMANCE FIX: Strict unique IDs
+// PERFORMANCE FIX: Strict unique IDs & Fixed Case-Sensitive Paths for Vercel
 const galleryData = [
+  const galleryData = [
   { id: "reg-1", src: "/gallery/registration/1.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-2", src: "/gallery/registration/2.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-3", src: "/gallery/registration/3.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
@@ -58,7 +59,7 @@ const galleryData = [
   { id: "award-5", src: "/gallery/seating/award/5.jpg", category: "Seating Arrangements", subCategory: "Award Receiving", title: "Award Receiving Management" },
   { id: "award-6", src: "/gallery/seating/award/6.jpg", category: "Seating Arrangements", subCategory: "Award Receiving", title: "Award Receiving Management" },
 
-  // Procession
+  // Procession - FIXED: Capital 'P' changed to simple 'p' to match Vercel/Linux folder structure
   { id: "proc-1", src: "/gallery/seating/procession/1.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
   { id: "proc-2", src: "/gallery/seating/procession/2.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
   { id: "proc-3", src: "/gallery/seating/procession/3.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
@@ -109,10 +110,11 @@ const galleryData = [
   { id: "stg-hd-1", src: "/gallery/stage/headtabledeco/1.jpg", category: "Stage Arrangements", subCategory: "Head Table Decorations", title: "Head Table Decorations" },
   { id: "stg-hd-2", src: "/gallery/stage/headtabledeco/2.jpg", category: "Stage Arrangements", subCategory: "Head Table Decorations", title: "Head Table Decorations" },
 
-  { id: "stg-gar-1", src: "/gallery/stage/garlends/1.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
-  { id: "stg-gar-2", src: "/gallery/stage/garlends/2.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
-  { id: "stg-gar-3", src: "/gallery/stage/garlends/3.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
-  { id: "stg-gar-4", src: "/gallery/stage/garlends/4.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  // Garlands - FIXED: 'garlends' typo changed to 'garlands' to match the actual folder name
+  { id: "stg-gar-1", src: "/gallery/stage/garlands/1.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-2", src: "/gallery/stage/garlands/2.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-3", src: "/gallery/stage/garlands/3.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-4", src: "/gallery/stage/garlands/4.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
 
   { id: "ent-1", src: "/gallery/entertainment/1.jpg", category: "Entertainment", title: "Traditional Wes Dance Performance" },
   { id: "snd-1", src: "/gallery/sound/1.jpg", category: "Sound & Lighting Systems", title: "Dynamic Concert Lighting" },
@@ -450,9 +452,8 @@ export default function GalleryGrid() {
           </div>
 
           {/* --- PERFORMANCE OPTIMIZED GRID --- */}
-          {/* MIN-HEIGHT FIX: Prevents page from jumping to top when filtering */}
           <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 min-h-[50vh]">
-            <AnimatePresence>
+            <AnimatePresence mode="popLayout">
               {filteredImages.map((item, index) => (
                 <motion.div
                   key={item.id}
@@ -539,7 +540,7 @@ export default function GalleryGrid() {
       </div>
       
       {/* ==============================================
-          BEAUTIFUL GLASSMORPHIC LIGHTBOX (POPUP)
+          BEAUTIFUL GLASSMORPHIC LIGHTBOX (POPUP) - CLEAN VERSION
           ============================================== */}
       <AnimatePresence>
         {selectedImage && (
@@ -566,6 +567,7 @@ export default function GalleryGrid() {
                 <X className="w-5 h-5" />
               </button>
               
+              {/* Clean Image Container - No Text, No Background Box */}
               <div className="relative w-full flex items-center justify-center">
                 <img
                   src={selectedImage.src}
