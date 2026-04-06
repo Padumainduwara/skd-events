@@ -7,21 +7,28 @@ import { Maximize2, Image as ImageIcon, Filter, PlayCircle, ChevronDown, Chevron
 // --- DYNAMIC CATEGORIES WITH OPTIONAL SUB-CATEGORIES ---
 const categoriesConfig = [
   { name: "All" },
+
   { name: "Registration" },
+
   { 
     name: "Seating Arrangements", 
     subCategories: ["Auditorium", "Procession (Perahara)", "Award Receiving"] 
   },
+  
   { name: "Event Photography",
     subCategories: ["Highlights Photos", "Stage Photos", "Full & Bust Photos", "Family Photos", "Couple Photos", "Group Photos", "Backdrop Photos"]
    },
+
   { name: "Event Videography" },
+
   { name: "Master of Ceremony & Compere" },
+
   { 
     name: "Stage Arrangements",
     subCategories: ["Stage Flower Decorations", "LED Video Wall", "Oil Lamps Decorations", "Podium Decorations", "Digital Podium", "Welcome Wall", "55_ LED TV", "Head Table Decorations", "Flower Garlands & Baskets"] 
   },
-  { name: "Entertainment" },
+  
+  { name: "Entertainment", subCategories: ["Light Dance", "Wes Dance", "Latin Dance", "Indian Classical Dance", "Sesath Holders", "Puja Dancers"] },
   { name: "Sound & Lighting Systems" },
   { name: "Printing & Certificates" },
   { name: "Graduation Items" }
@@ -143,7 +150,7 @@ const galleryData = [
   { id: "video-2", src: "/gallery/videography/2.jpg", category: "Event Videography", title: "360 Video Booth Setup" },
   { id: "video-3", src: "/gallery/videography/3.jpg", category: "Event Videography", title: "360 Video Booth Setup" },
 
-
+  //cCompere
   { id: "compere-1", src: "/gallery/compere/1.jpg", category: "Master of Ceremony & Compere", title: "Professional Compere on Stage" },
   
   // Stage Arrangements 
@@ -187,10 +194,51 @@ const galleryData = [
   { id: "stg-gar-3", src: "/gallery/stage/garlands/3.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
   { id: "stg-gar-4", src: "/gallery/stage/garlands/4.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
 
-  { id: "ent-1", src: "/gallery/entertainment/1.jpg", category: "Entertainment", title: "Traditional Wes Dance Performance" },
+  // Light Dance
+  { id: "ent-light-1", src: "/gallery/entertainment/light/1.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
+  { id: "ent-light-2", src: "/gallery/entertainment/light/2.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
+  { id: "ent-light-3", src: "/gallery/entertainment/light/3.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
+  { id: "ent-light-4", src: "/gallery/entertainment/light/4.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
+  { id: "ent-light-5", src: "/gallery/entertainment/light/5.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
+  { id: "ent-light-6", src: "/gallery/entertainment/light/6.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
+
+  // Wes Dance
+  { id: "ent-west-1", src: "/gallery/entertainment/wes/1.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+  { id: "ent-west-2", src: "/gallery/entertainment/wes/2.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+  { id: "ent-west-3", src: "/gallery/entertainment/wes/3.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+  { id: "ent-west-4", src: "/gallery/entertainment/wes/4.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+  { id: "ent-west-5", src: "/gallery/entertainment/wes/5.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+  { id: "ent-west-6", src: "/gallery/entertainment/wes/6.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+  { id: "ent-west-7", src: "/gallery/entertainment/wes/7.jpg", category: "Entertainment", subCategory: "Wes Dance", title: "Wes Dance Performance" },
+
+  // Sesath Holders
+  { id: "ent-sesath-7", src: "/gallery/entertainment/sesath/1.jpg", category: "Entertainment", subCategory: "Sesath Holders", title: "Sesath Holders" },
+
+  // Puja Dancers
+  { id: "ent-puja-1", src: "/gallery/entertainment/puja/1.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+  { id: "ent-puja-2", src: "/gallery/entertainment/puja/2.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+  { id: "ent-puja-3", src: "/gallery/entertainment/puja/3.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+  { id: "ent-puja-4", src: "/gallery/entertainment/puja/4.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+  { id: "ent-puja-5", src: "/gallery/entertainment/puja/5.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+  { id: "ent-puja-6", src: "/gallery/entertainment/puja/6.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+  { id: "ent-puja-7", src: "/gallery/entertainment/puja/7.jpg", category: "Entertainment", subCategory: "Puja Dancers", title: "Puja Dancers" },
+
+  // latin Dance
+  { id: "ent-latin-1", src: "/gallery/entertainment/latin/1.jpg", category: "Entertainment", subCategory: "Latin Dance", title: "Latin Dance Performance" },
+  { id: "ent-latin-2", src: "/gallery/entertainment/latin/2.jpg", category: "Entertainment", subCategory: "Latin Dance", title: "Latin Dance Performance" },
+  { id: "ent-latin-3", src: "/gallery/entertainment/latin/3.jpg", category: "Entertainment", subCategory: "Latin Dance", title: "Latin Dance Performance" },
+
+  // Indian Classical Dance
+  { id: "ent-indian-1", src: "/gallery/entertainment/indian/1.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
+  { id: "ent-indian-2", src: "/gallery/entertainment/indian/2.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
+  { id: "ent-indian-3", src: "/gallery/entertainment/indian/3.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
+  { id: "ent-indian-4", src: "/gallery/entertainment/indian/4.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
+
+
   { id: "snd-1", src: "/gallery/sound/1.jpg", category: "Sound & Lighting Systems", title: "Dynamic Concert Lighting" },
   { id: "prt-1", src: "/gallery/printing/1.jpg", category: "Printing & Certificates", title: "Custom Graduation Folders" },
   { id: "grad-1", src: "/gallery/graduation/1.jpg", category: "Graduation Items", title: "Premium Graduation Cloaks" }
+  
 ];
 
 // --- CATEGORY TO YOUTUBE VIDEO MAPPING ---
