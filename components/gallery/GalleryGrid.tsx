@@ -12,7 +12,9 @@ const categoriesConfig = [
     name: "Seating Arrangements", 
     subCategories: ["Auditorium", "Procession (Perahara)", "Award Receiving"] 
   },
-  { name: "Event Photography" },
+  { name: "Event Photography",
+    subCategories: ["Highlights Photos", "Stage Photos", "Full & Bust Photos", "Family Photos", "Couple Photos", "Group Photos", "Backdrop Photos"]
+   },
   { name: "Event Videography" },
   { name: "Master of Ceremony & Compere" },
   { 
@@ -33,6 +35,9 @@ const galleryData = [
   { id: "reg-5", src: "/gallery/registration/5.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-6", src: "/gallery/registration/6.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
   { id: "reg-7", src: "/gallery/registration/7.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
+  { id: "reg-8", src: "/gallery/registration/8.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
+  { id: "reg-9", src: "/gallery/registration/9.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
+  { id: "reg-10", src: "/gallery/registration/10.jpg", category: "Registration", title: "VIP Guest Check-in Area" },
 
   // Seating Arrangements
   { id: "seat-1", src: "/gallery/seating/seating/1.jpg", category: "Seating Arrangements", subCategory: "Auditorium", title: "Premium Auditorium Seating" },
@@ -66,10 +71,79 @@ const galleryData = [
   { id: "proc-8", src: "/gallery/seating/procession/8.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
   { id: "proc-9", src: "/gallery/seating/procession/9.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
   { id: "proc-10", src: "/gallery/seating/procession/10.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-11", src: "/gallery/seating/procession/11.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-12", src: "/gallery/seating/procession/12.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
+  { id: "proc-13", src: "/gallery/seating/procession/13.jpg", category: "Seating Arrangements", subCategory: "Procession (Perahara)", title: "Traditional Procession Setup" },
 
-  // Other Placeholders for testing
-  { id: "photo-1", src: "/gallery/photography/1.jpg", category: "Event Photography", title: "Graduation Group Photo" },
+
+  //  Highlight Photos
+  { id: "photo-high-1", src: "/gallery/photography/highlight/1.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-2", src: "/gallery/photography/highlight/2.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-3", src: "/gallery/photography/highlight/3.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-4", src: "/gallery/photography/highlight/4.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-5", src: "/gallery/photography/highlight/5.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-6", src: "/gallery/photography/highlight/6.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-7", src: "/gallery/photography/highlight/7.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-8", src: "/gallery/photography/highlight/8.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-9", src: "/gallery/photography/highlight/9.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-10", src: "/gallery/photography/highlight/10.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-11", src: "/gallery/photography/highlight/11.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  { id: "photo-high-12", src: "/gallery/photography/highlight/12.jpg", category: "Event Photography", subCategory: "Highlights Photos", title: "Highlight Photos" },
+  // Stage 
+  { id: "photo-stg-1", src: "/gallery/photography/stage/1.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-2", src: "/gallery/photography/stage/2.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-3", src: "/gallery/photography/stage/3.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-4", src: "/gallery/photography/stage/4.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-5", src: "/gallery/photography/stage/5.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-6", src: "/gallery/photography/stage/6.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-7", src: "/gallery/photography/stage/7.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+  { id: "photo-stg-8", src: "/gallery/photography/stage/8.jpg", category: "Event Photography", subCategory: "Stage Photos", title: "Stage Photos" },
+
+  // Full and Bust
+  { id: "photo-fb-1", src: "/gallery/photography/fullbust/1.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-2", src: "/gallery/photography/fullbust/2.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-3", src: "/gallery/photography/fullbust/3.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-4", src: "/gallery/photography/fullbust/4.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-5", src: "/gallery/photography/fullbust/5.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-6", src: "/gallery/photography/fullbust/6.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-7", src: "/gallery/photography/fullbust/7.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-8", src: "/gallery/photography/fullbust/8.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+  { id: "photo-fb-9", src: "/gallery/photography/fullbust/9.jpg", category: "Event Photography", subCategory: "Full & Bust Photos", title: "Full & Bust Photos" },
+
+  // Family Photos
+  { id: "photo-fam-1", src: "/gallery/photography/family/1.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-2", src: "/gallery/photography/family/2.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-3", src: "/gallery/photography/family/3.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-4", src: "/gallery/photography/family/4.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-5", src: "/gallery/photography/family/5.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-6", src: "/gallery/photography/family/6.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-7", src: "/gallery/photography/family/7.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-8", src: "/gallery/photography/family/8.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+  { id: "photo-fam-9", src: "/gallery/photography/family/9.jpg", category: "Event Photography", subCategory: "Family Photos", title: "Family Photos" },
+
+  //Couple Photos
+  { id: "photo-cpl-1", src: "/gallery/photography/couple/1.jpg", category: "Event Photography", subCategory: "Couple Photos", title: "Couple Photos" },
+  { id: "photo-cpl-2", src: "/gallery/photography/couple/2.jpg", category: "Event Photography", subCategory: "Couple Photos", title: "Couple Photos" },
+  { id: "photo-cpl-3", src: "/gallery/photography/couple/3.jpg", category: "Event Photography", subCategory: "Couple Photos", title: "Couple Photos" },
+  { id: "photo-cpl-4", src: "/gallery/photography/couple/4.jpg", category: "Event Photography", subCategory: "Couple Photos", title: "Couple Photos" },
+
+  //Group Photos
+  { id: "photo-grp-1", src: "/gallery/photography/group/1.jpg", category: "Event Photography", subCategory: "Group Photos", title: "Group Photos" },
+
+  //backdrop 
+  { id: "photo-back-1", src: "/gallery/photography/backdrop/1.jpg", category: "Event Photography", subCategory: "Backdrop Photos", title: "Backdrop Photos" },
+  { id: "photo-back-2", src: "/gallery/photography/backdrop/2.jpg", category: "Event Photography", subCategory: "Backdrop Photos", title: "Backdrop Photos" },
+  { id: "photo-back-3", src: "/gallery/photography/backdrop/3.jpg", category: "Event Photography", subCategory: "Backdrop Photos", title: "Backdrop Photos" },
+  { id: "photo-back-4", src: "/gallery/photography/backdrop/4.jpg", category: "Event Photography", subCategory: "Backdrop Photos", title: "Backdrop Photos" },
+  { id: "photo-back-5", src: "/gallery/photography/backdrop/5.jpg", category: "Event Photography", subCategory: "Backdrop Photos", title: "Backdrop Photos" },
+  { id: "photo-back-6", src: "/gallery/photography/backdrop/6.jpg", category: "Event Photography", subCategory: "Backdrop Photos", title: "Backdrop Photos" },
+
+  //Event Videography
   { id: "video-1", src: "/gallery/videography/1.jpg", category: "Event Videography", title: "360 Video Booth Setup" },
+  { id: "video-2", src: "/gallery/videography/2.jpg", category: "Event Videography", title: "360 Video Booth Setup" },
+  { id: "video-3", src: "/gallery/videography/3.jpg", category: "Event Videography", title: "360 Video Booth Setup" },
+
+
   { id: "compere-1", src: "/gallery/compere/1.jpg", category: "Master of Ceremony & Compere", title: "Professional Compere on Stage" },
   
   // Stage Arrangements 
