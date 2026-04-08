@@ -234,16 +234,20 @@ const galleryData = [
   { id: "ent-indian-3", src: "/gallery/entertainment/indian/3.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
   { id: "ent-indian-4", src: "/gallery/entertainment/indian/4.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
 
+  // Flags
+  { id: "pc-flag-1", src: "/gallery/pc/flags/1.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
+  { id: "pc-flag-2", src: "/gallery/pc/flags/2.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
+  { id: "pc-flag-3", src: "/gallery/pc/flags/3.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
+  { id: "pc-flag-4", src: "/gallery/pc/flags/4.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
+  { id: "pc-flag-5", src: "/gallery/pc/flags/5.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
 
   { id: "snd-1", src: "/gallery/sound/1.jpg", category: "Sound & Lighting Systems", title: "Dynamic Concert Lighting" },
-  { id: "prt-1", src: "/gallery/printing/1.jpg", category: "Printing & Certificates", title: "Custom Graduation Folders" },
   { id: "grad-1", src: "/gallery/graduation/1.jpg", category: "Graduation Items", title: "Premium Graduation Cloaks" }
   
 ];
 
 // --- CATEGORY TO YOUTUBE VIDEO MAPPING ---
 const categoryVideos: Record<string, string> = {
-  "Stage Arrangements": "wkGEiVu_duQ",
   "Seating Arrangements": "wkGEiVu_duQ",
   "Registration": "wkGEiVu_duQ"
 };
