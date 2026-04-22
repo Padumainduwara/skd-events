@@ -30,9 +30,20 @@ export default function Footer() {
             <p className="text-lg text-[#a40049] font-bold tracking-wide italic mb-4">
               "Inspired Events, Lasting Impressions."
             </p>
-            <p className="text-gray-600 text-sm leading-relaxed mb-8 max-w-sm">
+            <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-sm">
               Sri Lanka's premier event management company. We transform your ideas into extraordinary, world-class experiences with precision and creativity.
             </p>
+            
+            {/* ISO Certification Badge - NEW */}
+            <div className="inline-flex items-center gap-3 bg-white border border-gray-200 shadow-sm rounded-xl px-4 py-2.5 mb-8">
+              <div className="w-8 h-8 rounded-full bg-[#a40049]/10 flex items-center justify-center font-black text-[#a40049] text-[10px] tracking-tighter">
+                ISO
+              </div>
+              <div className="flex flex-col">
+                <span className="text-gray-900 font-extrabold text-xs">ISO 9001:2015 Certified</span>
+                <span className="text-gray-500 text-[10px] font-medium uppercase tracking-wider">Quality Management System</span>
+              </div>
+            </div>
             
             {/* Social Links */}
             <div className="flex gap-3">

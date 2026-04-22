@@ -3,6 +3,7 @@
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Maximize2, Image as ImageIcon, Filter, PlayCircle, ChevronDown, ChevronRight, X, SlidersHorizontal } from "lucide-react";
+import { s } from "framer-motion/client";
 
 // --- DYNAMIC CATEGORIES WITH OPTIONAL SUB-CATEGORIES ---
 const categoriesConfig = [
@@ -30,8 +31,8 @@ const categoriesConfig = [
   
   { name: "Entertainment", subCategories: ["Light Dance", "Wes Dance", "Latin Dance", "Indian Classical Dance", "Sesath Holders", "Puja Dancers"] },
   { name: "Sound & Lighting Systems" },
-  { name: "Printing & Certificates" },
-  { name: "Graduation Items" }
+  { name: "Printing & Certificates" , subCategories: ["Flags", "TokenOfAppreciation", "Suvourniers"]},
+  { name: "Graduation Items" , subCategories: ["Garloeds", "Scrolls"]},
 ];
 
 const galleryData = [
@@ -235,34 +236,82 @@ const galleryData = [
   { id: "ent-indian-4", src: "/gallery/entertainment/indian/4.jpg", category: "Entertainment", subCategory: "Indian Classical Dance", title: "Indian Classical Dance" },
 
   // Flags
-  { id: "pc-flag-1", src: "/gallery/pc/flags/1.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
-  { id: "pc-flag-2", src: "/gallery/pc/flags/2.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
-  { id: "pc-flag-3", src: "/gallery/pc/flags/3.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
-  { id: "pc-flag-4", src: "/gallery/pc/flags/4.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
-  { id: "pc-flag-5", src: "/gallery/pc/flags/5.jpg", category: "Printing & Certificates", title: "Printing & Certificates" },
+  { id: "pc-flag-1", src: "/gallery/pc/flags/1.jpg", category: "Printing & Certificates", subCategory: "Flags", title: "Printing & Certificates" },
+  { id: "pc-flag-2", src: "/gallery/pc/flags/2.jpg", category: "Printing & Certificates", subCategory: "Flags", title: "Printing & Certificates" },
+  { id: "pc-flag-3", src: "/gallery/pc/flags/3.jpg", category: "Printing & Certificates", subCategory: "Flags", title: "Printing & Certificates" },
+  { id: "pc-flag-4", src: "/gallery/pc/flags/4.jpg", category: "Printing & Certificates", subCategory: "Flags", title: "Printing & Certificates" },
+  { id: "pc-flag-5", src: "/gallery/pc/flags/5.jpg", category: "Printing & Certificates", subCategory: "Flags", title: "Printing & Certificates" },
+  { id: "pc-token-1", src: "/gallery/pc/tokens/1.jpg", category: "Printing & Certificates", subCategory: "TokenOfAppreciation", title: "Printing & Certificates" },
+  { id: "pc-token-2", src: "/gallery/pc/tokens/2.jpg", category: "Printing & Certificates", subCategory: "TokenOfAppreciation", title: "Printing & Certificates" },
+  { id: "pc-token-3", src: "/gallery/pc/tokens/3.jpg", category: "Printing & Certificates", subCategory: "TokenOfAppreciation", title: "Printing & Certificates" },
+  { id: "pc-suvour-1", src: "/gallery/pc/suvour/1.jpg", category: "Printing & Certificates", subCategory: "Suvourniers", title: "Printing & Certificates" },
+  { id: "pc-suvour-2", src: "/gallery/pc/suvour/2.jpg", category: "Printing & Certificates", subCategory: "Suvourniers", title: "Printing & Certificates" },
 
+  { id: "grad-garl-1", src: "/gallery/graduationitems/garloeds/1.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-garl-2", src: "/gallery/graduationitems/garloeds/2.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-garl-3", src: "/gallery/graduationitems/garloeds/3.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-garl-4", src: "/gallery/graduationitems/garloeds/4.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-garl-5", src: "/gallery/graduationitems/garloeds/5.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-garl-6", src: "/gallery/graduationitems/garloeds/6.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-garl-7", src: "/gallery/graduationitems/garloeds/7.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
+  { id: "grad-scroll-1", src: "/gallery/graduationitems/scrolls/1.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-2", src: "/gallery/graduationitems/scrolls/2.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-3", src: "/gallery/graduationitems/scrolls/3.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-4", src: "/gallery/graduationitems/scrolls/4.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+
+  
   { id: "snd-1", src: "/gallery/sound/1.jpg", category: "Sound & Lighting Systems", title: "Dynamic Concert Lighting" },
-  { id: "grad-1", src: "/gallery/graduation/1.jpg", category: "Graduation Items", title: "Premium Graduation Cloaks" }
+
   
 ];
 
 // --- CATEGORY TO YOUTUBE VIDEO MAPPING ---
-const categoryVideos: Record<string, string> = {
-  "Seating Arrangements": "wkGEiVu_duQ",
-  "Registration": "wkGEiVu_duQ"
+const categoryVideos: Record<string, string[]> = {
+  // Main Categories
+  "Seating Arrangements": ["if_Phg6H-FU"],
+  "Event Videography": ["wkGEiVu_duQ", "ig-q_lhvFNs", "kfLKCrPA5Ak"],
+  "Master of Ceremony & Compere": ["8Se9Yrl3snc", "sWrWX_07ZAo", "e36gEPxbbIc"],
+  "Entertainment": ["kQIsAfJ8b7U"],
+  "Stage Arrangements": ["Cc5baISr2wA"],
+
+  // Sub-Categories (ඔයාට ඕන Sub-category නමක් මෙතනට දාලා Video IDs දෙන්න පුළුවන්)
+  "Light Dance": ["AAhlUA2UxYg", "BnpiFk1-_mM"], 
+  "Wes Dance": ["2aXeCaRUSTY"],
+  "Latin Dance": ["N8nS014KaUU"],
+  "Puja Dancers": ["HXSz-TQ5hdw"],
+  "Auditorium": ["video_id_for_auditorium"]
+};
+const StandardVideoPlayer = ({ videoId }: { videoId: string }) => {
+  const ref = useRef<HTMLIFrameElement>(null);
+  const isInView = useInView(ref, { margin: "0px" });
+
+  // Auto-pause logic using YouTube Iframe API postMessage
+  useEffect(() => {
+    if (!isInView && ref.current) {
+      ref.current.contentWindow?.postMessage(JSON.stringify({ event: 'command', func: 'pauseVideo' }), '*');
+    }
+  }, [isInView]);
+
+  return (
+    <div className="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-gray-100 bg-gray-900 aspect-video group">
+      <iframe
+        ref={ref}
+        // enablejsapi=1 is required for auto-pause. vq=hd1080 forces 1080p.
+        src={`https://www.youtube.com/embed/${videoId}?enablejsapi=1&vq=hd1080&rel=0`}
+        title="YouTube Video Player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        className="absolute inset-0 w-full h-full"
+      />
+    </div>
+  );
 };
 
-// ============================================================================
-// PERFORMANCE FIX: Smart Video Player Component (Autoplays only when visible)
-// ============================================================================
-const AmbientVideoPlayer = ({ videoId, categoryName }: { videoId: string, categoryName: string }) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { margin: "100px 0px 100px 0px" });
-  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+const CategoryVideoShowcase = ({ videoIds, categoryName }: { videoIds: string[], categoryName: string }) => {
+  if (!videoIds || videoIds.length === 0) return null;
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -275,38 +324,15 @@ const AmbientVideoPlayer = ({ videoId, categoryName }: { videoId: string, catego
         </div>
         <div>
           <h3 className="text-lg sm:text-xl font-extrabold text-gray-900">{categoryName} Highlights</h3>
-          <p className="text-xs sm:text-sm text-gray-500 font-medium">Experience our world-class execution in motion.</p>
+          <p className="text-xs sm:text-sm text-gray-500 font-medium">Click to experience our world-class execution.</p>
         </div>
       </div>
 
-      <div className="relative w-full rounded-[1rem] sm:rounded-[2rem] overflow-hidden shadow-2xl shadow-gray-200/50 bg-gray-900 aspect-video group">
-        
-        <AnimatePresence>
-          {!isVideoLoaded && (
-            <motion.div 
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="absolute inset-0 bg-gray-900 z-10 flex flex-col items-center justify-center"
-            >
-              <div className="w-12 h-12 border-4 border-gray-700 border-t-[#a40049] rounded-full animate-spin mb-4" />
-              <p className="text-gray-400 text-sm font-bold tracking-widest uppercase animate-pulse">Loading Cinematic Experience...</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {isInView && (
-          <iframe
-            src={`https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1&playlist=${videoId}&controls=0&showinfo=0&rel=0&modestbranding=1&vq=hd1080`}
-            title={`${categoryName} Video Showcase`}
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            onLoad={() => setIsVideoLoaded(true)}
-            className={`absolute inset-[-10%] w-[120%] h-[120%] object-cover pointer-events-none transform scale-[1.05] transition-opacity duration-1000 ${isVideoLoaded ? 'opacity-100' : 'opacity-0'}`} 
-            style={{ border: 'none' }}
-          />
-        )}
-        
-        <div className="absolute inset-0 border-[8px] sm:border-[16px] border-black pointer-events-none opacity-5" />
-        <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+      {/* Grid dynamically adjusts: 1 video = full width, 2+ videos = 2 columns on Desktop */}
+      <div className={`grid gap-6 sm:gap-8 ${videoIds.length > 1 ? 'grid-cols-1 lg:grid-cols-2' : 'grid-cols-1'}`}>
+        {videoIds.map((id, index) => (
+          <StandardVideoPlayer key={`${id}-${index}`} videoId={id} />
+        ))}
       </div>
     </motion.div>
   );
@@ -360,7 +386,8 @@ export default function GalleryGrid() {
     });
   }, [activeCategory, activeSubCategory]);
 
-  const activeVideoId = categoryVideos[activeCategory];
+  const activeVideoKey = activeSubCategory !== "All" ? activeSubCategory : activeCategory;
+  const activeVideoIds = categoryVideos[activeVideoKey] || [];
 
   // Reusable Sidebar Content
   const SidebarContent = () => (
@@ -586,6 +613,7 @@ export default function GalleryGrid() {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
                   className="relative rounded-3xl overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-300 bg-white transform-gpu will-change-[transform,opacity]"
+                  style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}
                 >
                   <div className="w-full aspect-square bg-gray-100 relative">
                     
@@ -654,8 +682,12 @@ export default function GalleryGrid() {
 
           {/* YOUTUBE AMBIENT VIDEO SHOWCASE */}
           <AnimatePresence mode="wait">
-            {activeVideoId && activeSubCategory === "All" && (
-              <AmbientVideoPlayer key={activeVideoId} videoId={activeVideoId} categoryName={activeCategory} />
+            {activeVideoIds && activeVideoIds.length > 0 && (
+              <CategoryVideoShowcase 
+                key={activeVideoKey} 
+                videoIds={activeVideoIds} 
+                categoryName={activeVideoKey} 
+              />
             )}
           </AnimatePresence>
 

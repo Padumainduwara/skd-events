@@ -27,9 +27,34 @@ export default function AboutDetails() {
                   <span className="text-[#a40049]">What We Do</span>
                 </h2>
                 <div className="w-20 h-2 bg-[#a40049] rounded-full mb-6" />
-                <p className="text-gray-500 text-lg font-medium leading-relaxed border-l-4 border-gray-200 pl-4">
-                  An extended division of SKD Manufacturer (Pvt) Ltd (ISO Certified).
+                <p className="text-gray-500 text-lg font-medium leading-relaxed border-l-4 border-gray-200 pl-4 mb-10">
+                  An extended division of SKD Manufacturer (Pvt) Ltd.
                 </p>
+
+                {/* ISO Certification Details - NEW */}
+                <div className="bg-gradient-to-br from-gray-50 to-white border border-gray-100 p-6 rounded-[2rem] shadow-[0_10px_40px_-15px_rgba(0,0,0,0.05)] relative overflow-hidden">
+                  <div className="absolute -right-6 -top-6 w-24 h-24 bg-[#a40049]/5 rounded-full blur-2xl" />
+                  
+                  <div className="flex items-start gap-4 mb-4 relative z-10">
+                    <div className="w-12 h-12 bg-white border border-gray-100 shadow-sm rounded-2xl flex items-center justify-center shrink-0">
+                      <span className="text-[#a40049] font-black text-sm tracking-tighter">ISO</span>
+                    </div>
+                    <div>
+                      <h4 className="text-gray-900 font-extrabold text-lg leading-tight">ISO 9001:2015 Certified</h4>
+                      <span className="text-[#a40049] font-bold text-xs uppercase tracking-wider">Quality Management System</span>
+                    </div>
+                  </div>
+                  
+                  <p className="text-sm text-gray-600 font-medium leading-relaxed mb-4">
+                    Our operations are backed by internationally recognized standards, ensuring consistent quality, reliability, and continuous improvement in every event we manage.
+                  </p>
+                  
+                  <div className="pt-4 border-t border-gray-100 flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-[#25D366]" />
+                    <span className="text-xs font-bold text-gray-800">Certificate No: 0705Q108024</span>
+                  </div>
+                </div>
+
               </motion.div>
             </div>
           </div>

@@ -32,7 +32,7 @@ export default function HomeAbout() {
               </div>
               
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight leading-[1.15]">
-                Transforming Ideas into <br className="hidden lg:block" />
+                Transforming Ideas into{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#a40049] to-[#ff4d94]">Extraordinary Experiences.</span>
               </h2>
             </div>
@@ -41,9 +41,19 @@ export default function HomeAbout() {
             <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
               
               {/* FIXED: Typography for Mobile. Added text-center sm:text-left (handled by parent), max-w, and leading-relaxed */}
-              <p className="text-base sm:text-lg text-gray-600 leading-relaxed sm:leading-loose mb-8 font-medium max-w-xl lg:max-w-none">
-                Welcome to SKD Event Management. As an extended division of SKD Manufacturer (Pvt) Ltd (ISO Certified), we blend creativity with precision to deliver world-class events. From distinguished convocations to grand corporate launches, we bring passion and innovation to every project.
+              <p className="text-base sm:text-lg text-gray-600 leading-relaxed sm:leading-loose mb-6 font-medium max-w-xl lg:max-w-none">
+                Welcome to SKD Event Management. As an extended division of SKD Manufacturer (Pvt) Ltd, we blend creativity with precision to deliver world-class events. From distinguished convocations to grand corporate launches, we bring passion and innovation to every project.
               </p>
+
+              {/* ISO Certification Highlight - NEW */}
+              <div className="inline-flex flex-wrap items-center justify-center lg:justify-start gap-2 sm:gap-3 bg-[#a40049]/5 border border-[#a40049]/20 rounded-2xl px-4 sm:px-5 py-3 mb-8 w-full max-w-xl lg:max-w-none">
+  <span className="flex items-center justify-center w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-[#a40049] text-white font-black text-[9px] sm:text-[10px] tracking-tighter shrink-0 shadow-md">
+    ISO
+  </span>
+  <p className="text-sm sm:text-base text-gray-900 font-extrabold text-center">
+    Proudly <span className="text-[#a40049]">ISO 9001:2015</span> Certified <span className="font-medium text-gray-600 ml-1 text-xs sm:text-sm hidden sm:inline">(Quality Management System)</span>
+  </p>
+</div>
 
               {/* Checkmark points from PDF - Left Aligned inside a centered container on mobile */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 w-full max-w-md lg:max-w-none text-left">
