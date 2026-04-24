@@ -32,7 +32,7 @@ const categoriesConfig = [
   { name: "Entertainment", subCategories: ["Light Dance", "Wes Dance", "Latin Dance", "Indian Classical Dance", "Sesath Holders", "Puja Dancers"] },
   { name: "Sound & Lighting Systems" },
   { name: "Printing & Certificates" , subCategories: ["Flags", "TokenOfAppreciation", "Suvourniers"]},
-  { name: "Graduation Items" , subCategories: ["Garloeds", "Scrolls"]},
+  { name: "Graduation Items" , subCategories: ["Garlands", "Scrolls", "Hoods", "Cloaks", "Stoles", "Certificate Pouches", "Hats"]},
 ];
 
 const galleryData = [
@@ -190,10 +190,10 @@ const galleryData = [
   { id: "stg-hd-1", src: "/gallery/stage/headtabledeco/1.jpg", category: "Stage Arrangements", subCategory: "Head Table Decorations", title: "Head Table Decorations" },
   { id: "stg-hd-2", src: "/gallery/stage/headtabledeco/2.jpg", category: "Stage Arrangements", subCategory: "Head Table Decorations", title: "Head Table Decorations" },
 
-  { id: "stg-gar-1", src: "/gallery/stage/garlands/1.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
-  { id: "stg-gar-2", src: "/gallery/stage/garlands/2.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
-  { id: "stg-gar-3", src: "/gallery/stage/garlands/3.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
-  { id: "stg-gar-4", src: "/gallery/stage/garlands/4.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-1", src: "/gallery/stage/garland/1.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-2", src: "/gallery/stage/garland/2.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-3", src: "/gallery/stage/garland/3.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
+  { id: "stg-gar-4", src: "/gallery/stage/garland/4.jpg", category: "Stage Arrangements", subCategory: "Flower Garlands & Baskets", title: "Flower Garlands & Baskets" },
 
   // Light Dance
   { id: "ent-light-1", src: "/gallery/entertainment/light/1.jpg", category: "Entertainment", subCategory: "Light Dance", title: "Light Dance Performance" },
@@ -247,19 +247,36 @@ const galleryData = [
   { id: "pc-suvour-1", src: "/gallery/pc/suvour/1.jpg", category: "Printing & Certificates", subCategory: "Suvourniers", title: "Printing & Certificates" },
   { id: "pc-suvour-2", src: "/gallery/pc/suvour/2.jpg", category: "Printing & Certificates", subCategory: "Suvourniers", title: "Printing & Certificates" },
 
-  { id: "grad-garl-1", src: "/gallery/graduationitems/garloeds/1.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-garl-2", src: "/gallery/graduationitems/garloeds/2.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-garl-3", src: "/gallery/graduationitems/garloeds/3.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-garl-4", src: "/gallery/graduationitems/garloeds/4.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-garl-5", src: "/gallery/graduationitems/garloeds/5.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-garl-6", src: "/gallery/graduationitems/garloeds/6.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-garl-7", src: "/gallery/graduationitems/garloeds/7.jpg", category: "Graduation Items", subCategory: "Garloeds", title: "Premium Garloeds" },
-  { id: "grad-scroll-1", src: "/gallery/graduationitems/scrolls/1.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
-  { id: "grad-scroll-2", src: "/gallery/graduationitems/scrolls/2.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
-  { id: "grad-scroll-3", src: "/gallery/graduationitems/scrolls/3.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
-  { id: "grad-scroll-4", src: "/gallery/graduationitems/scrolls/4.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-garl-1", src: "/gallery/graduationitems/garland/1.jpg", category: "Graduation Items", subCategory: "Garlands", title: "Premium Garlands" },
+  { id: "grad-garl-2", src: "/gallery/graduationitems/garland/2.jpeg", category: "Graduation Items", subCategory: "Garlands", title: "Premium Garlands" },
+  { id: "grad-garl-3", src: "/gallery/graduationitems/garland/3.jpeg", category: "Graduation Items", subCategory: "Garlands", title: "Premium Garlands" },
 
-  
+  { id: "grad-scroll-1", src: "/gallery/graduationitems/scrolls/1.jpg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-2", src: "/gallery/graduationitems/scrolls/2.jpeg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-3", src: "/gallery/graduationitems/scrolls/3.jpeg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-4", src: "/gallery/graduationitems/scrolls/4.jpeg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-5", src: "/gallery/graduationitems/scrolls/5.jpeg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-6", src: "/gallery/graduationitems/scrolls/6.jpeg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+  { id: "grad-scroll-7", src: "/gallery/graduationitems/scrolls/7.jpeg", category: "Graduation Items", subCategory: "Scrolls", title: "Premium Scrolls" },
+
+  { id: "grad-hoods-1", src: "/gallery/graduationitems/hoods/1.jpg", category: "Graduation Items", subCategory: "Hoods", title: "Premium Hoods" },
+  { id: "grad-hoods-2", src: "/gallery/graduationitems/hoods/2.jpg", category: "Graduation Items", subCategory: "Hoods", title: "Premium Hoods" },
+  { id: "grad-hoods-3", src: "/gallery/graduationitems/hoods/3.jpg", category: "Graduation Items", subCategory: "Hoods", title: "Premium Hoods" },
+
+  { id: "grad-cloaks-1", src: "/gallery/graduationitems/cloaks/1.jpeg", category: "Graduation Items", subCategory: "Cloaks", title: "Premium Cloaks" },
+  { id: "grad-cloaks-2", src: "/gallery/graduationitems/cloaks/2.jpeg", category: "Graduation Items", subCategory: "Cloaks", title: "Premium Cloaks" },
+  { id: "grad-cloaks-3", src: "/gallery/graduationitems/cloaks/3.jpeg", category: "Graduation Items", subCategory: "Cloaks", title: "Premium Cloaks" },
+
+  { id: "grad-stoles-1", src: "/gallery/graduationitems/stoles/1.jpg", category: "Graduation Items", subCategory: "Stoles", title: "Premium Stoles" },
+
+  { id: "grad-pouches-1", src: "/gallery/graduationitems/pouches/1.jpg", category: "Graduation Items", subCategory: "Certificate Pouches", title: "Premium Certificate Holder Pouches" },
+
+  { id: "grad-hats-1", src: "/gallery/graduationitems/hats/1.jpg", category: "Graduation Items", subCategory: "Hats", title: "Premium Hats" },
+  { id: "grad-hats-2", src: "/gallery/graduationitems/hats/2.jpeg", category: "Graduation Items", subCategory: "Hats", title: "Premium Hats" },
+  { id: "grad-hats-3", src: "/gallery/graduationitems/hats/3.jpeg", category: "Graduation Items", subCategory: "Hats", title: "Premium Hats" },
+  { id: "grad-hats-4", src: "/gallery/graduationitems/hats/4.jpeg", category: "Graduation Items", subCategory: "Hats", title: "Premium Hats" },
+  { id: "grad-hats-5", src: "/gallery/graduationitems/hats/5.jpeg", category: "Graduation Items", subCategory: "Hats", title: "Premium Hats" },
+
   { id: "snd-1", src: "/gallery/sound/1.jpg", category: "Sound & Lighting Systems", title: "Dynamic Concert Lighting" },
 
   
@@ -602,7 +619,7 @@ export default function GalleryGrid() {
           </div>
 
           {/* --- PERFORMANCE OPTIMIZED GRID --- */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-6 auto-rows-max">
             <AnimatePresence mode="popLayout">
               {filteredImages.map((item, index) => (
                 <motion.div
@@ -612,23 +629,33 @@ export default function GalleryGrid() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="relative rounded-3xl overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-300 bg-white transform-gpu will-change-[transform,opacity]"
+                  // Background එක කළු කළා (bg-gray-900) Blur එක ලස්සනට පේන්න
+                  className="relative rounded-3xl overflow-hidden group shadow-sm hover:shadow-2xl transition-all duration-300 bg-gray-900 transform-gpu will-change-[transform,opacity]"
                   style={{ contentVisibility: 'auto', containIntrinsicSize: '300px' }}
                 >
-                  <div className="w-full aspect-square bg-gray-100 relative">
+                  <div className="w-full aspect-square relative flex items-center justify-center overflow-hidden">
                     
+                    {/* 1. BLURRED BACKGROUND (මෙතනින් තමයි හිස් ඉඩ ලස්සනට පුරවන්නේ!) */}
+                    <img 
+                      src={item.src} 
+                      alt="" 
+                      className="absolute inset-0 w-full h-full object-cover opacity-50 blur-xl scale-125 transform-gpu"
+                    />
+                    
+                    {/* 2. ACTUAL IMAGE (කිසිම කෑල්ලක් කැපෙන්නේ නෑ, කොටුව මැද ලස්සනට තියෙනවා) */}
                     <img 
                       src={item.src} 
                       alt={item.title} 
                       decoding="async" 
                       loading="lazy" 
-                      className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[800ms] transform-gpu will-change-transform"
+                      className="relative z-10 w-full h-full object-contain p-2 sm:p-4 transform group-hover:scale-105 transition-transform duration-[800ms] transform-gpu will-change-transform drop-shadow-2xl"
                     />
                     
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                    {/* 3. HOVER GRADIENT OVERLAY (z-20 දාලා උඩට ගත්තා) */}
+                    <div className="absolute inset-0 z-20 bg-gradient-to-t from-black/90 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                     
-                    {/* Fixed pointer-events so button inside is clickable */}
-                    <div className="absolute inset-0 p-5 sm:p-6 flex flex-col justify-end translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform-gpu">
+                    {/* 4. CONTENT & BUTTONS (z-30 දාලා උඩටම ගත්තා) */}
+                    <div className="absolute inset-0 z-30 p-5 sm:p-6 flex flex-col justify-end translate-y-8 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-500 transform-gpu">
                       
                       <div className="flex flex-wrap items-center gap-2 mb-3 pointer-events-none">
                         <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-white text-[9px] sm:text-[10px] font-bold uppercase tracking-wider rounded-full shadow-sm">
